@@ -1,4 +1,8 @@
 #include "Gimmick.h"
+#include "Ground.h"
+#include "Utils.h"
+
+CGimmick* CGimmick::instance = NULL;
 
 CGimmick::CGimmick(float x, float y)
 {
@@ -10,15 +14,15 @@ CGimmick::CGimmick(float x, float y)
 	start_y = y;
 	this->x = x;
 	this->y = y;
+	vx = vy = 0;
 }
-
 void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 
 	// Simple fall down
-	vy += GIMMICK_GRAVITY*dt;
+	vy = 0;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -30,11 +34,7 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 		CalcPotentialCollisions(colliable_objects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > GIMMICK_UNTOUCHABLE_TIME)
-	{
-		untouchable_start = 0;
-		untouchable = 0;
-	}
+	
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -108,8 +108,66 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 		//}
 	}
 
+	if (GetTickCount() - untouchable_start > GIMMICK_UNTOUCHABLE_TIME)
+	{
+		untouchable_start = 0;
+		untouchable = 0;
+	}
 	// clean up collision events
+	// for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	_checkSweptAABB(colliable_objects);
+
+
+	instance = this;
+	DebugOut(L"location in Gimmick: %f, %f\n", x, y);
+
+}
+void CGimmick::_checkSweptAABB(vector<LPGAMEOBJECT>* coObjects) {
+	DWORD now = GetTickCount();
+
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+
+	CalcPotentialCollisions(coObjects, coEvents);
+	
+	// No collision occured, proceed normally
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else {
+		float min_tx, min_ty, nx = 0, ny;
+		float rdx = 0;
+		float rdy = 0;
+
+		// TODO: This is a very ugly designed function!!!!
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		bool isColisionGround = false;
+
+		for (UINT i = 0; i < coEventsResult.size(); i++) {
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (dynamic_cast<Ground*>(e->obj)) {
+
+			}
+		}
+		if (!isColisionGround) {
+			x += dx;
+			y += dy;
+		}
+		else {
+			x += min_tx * dx + nx * 0.4f;
+			y += min_ty * dy + ny * 0.4f;
+
+			if (nx != 0) vx = 0;
+			if (ny != 0) vy = 0;
+		}
+	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+
 }
 
 void CGimmick::Render()
@@ -129,8 +187,13 @@ void CGimmick::Render()
 
 	int alpha = 255;
 	if (untouchable) alpha = 128;
-
-	animation_set->at(ani)->Render(x, y, alpha);
+	float rx, ry;
+	if (x > 100) rx = 100; 
+	else rx = x;
+	DebugOut(L"location in Cammera: %f, %f\n", rx, y); 00;
+	CAnimationSets::GetInstance()->Get(1)->at(ani)->Render(rx, y, alpha);
+	DebugOut(L"location in Render: %f, %f\n", x, y);
+	//animation_set->at(ani)->Render(x, y, alpha);
 
 	RenderBoundingBox();
 }
@@ -162,10 +225,18 @@ void CGimmick::SetState(int state)
 	}
 }
 
-void CGimmick::Reset()
-{
-}
 
 void CGimmick::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
+
+}
+CGimmick* CGimmick::GetInstance() {
+	if (instance == NULL) instance = new CGimmick();
+	return instance;
+}
+void CGimmick::Reset() {
+
+}
+void CGimmick::Load(LPCWSTR filepath) {
+
 }

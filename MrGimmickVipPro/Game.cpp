@@ -5,6 +5,7 @@
 #include "Utils.h"
 
 #include "PlayScence.h"
+#include "Camera.h"
 
 CGame * CGame::__instance = NULL;
 
@@ -57,23 +58,65 @@ void CGame::Init(HWND hWnd)
 	// Initialize sprite helper from Direct3DX helper library
 	D3DXCreateSprite(d3ddv, &spriteHandler);
 
+	//D3DXMATRIX matScale;
+
+	//// kh?i t?o ma tr?n phóng to theo tr?c Ox 2 l?n, tr?c Oy 3 l?n.
+	//D3DXMatrixScaling(&matScale, (float)7/3, (float)7 / 3, .0f);
+
+	//// th?c hi?n vi?c chuy?n ??i.
+	//spriteHandler->SetTransform(&matScale);
+
+	//// camera = CCamera::GetInstance();
+
+	deviation_y = 0;
+
 	OutputDebugString(L"[INFO] InitGame done;\n");
 }
 
 /*
 	Utility function to wrap LPD3DXSPRITE::Draw 
 */
-void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
+void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha, int r, int g, int b)
 {
-	D3DXVECTOR3 p(x - cam_x, y - cam_y, 0);
-	RECT r; 
-	r.left = left;
-	r.top = top;
-	r.right = right;
-	r.bottom = bottom;
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	D3DXVECTOR3 p(floor(x), floor(y), 0);
+	RECT rect;
+	rect.left = left;
+	rect.top = top;
+	rect.right = right;
+	rect.bottom = bottom;
+
+	D3DXVECTOR3 position = CCamera::GetInstance()->GetPositionInCamera(p);
+	// position.y += deviation_y;
+
+	spriteHandler->Draw(texture, &rect, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+}
+void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT rect, int alpha, int r, int g, int b)
+{
+	D3DXVECTOR3 p(floor(x), floor(y), 0);
+	D3DXVECTOR3 position = CCamera::GetInstance()->GetPositionInCamera(p);
+	// position.y += deviation_y;
+
+	spriteHandler->Draw(texture, &rect, NULL, &position, D3DCOLOR_ARGB(alpha, r, g, b));
 }
 
+void CGame::DrawWithoutCamera(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha, int r, int g, int b)
+{
+	D3DXVECTOR3 p(floor(x), floor(y), 0);
+	RECT rect;
+	rect.left = left;
+	rect.top = top;
+	rect.right = right;
+	rect.bottom = bottom;
+
+	spriteHandler->Draw(texture, &rect, NULL, &p, D3DCOLOR_ARGB(alpha, r, g, b));
+}
+
+void CGame::DrawWithoutCamera(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT rect, int alpha, int r, int g, int b)
+{
+	D3DXVECTOR3 p(floor(x), floor(y), 0);
+
+	spriteHandler->Draw(texture, &rect, NULL, &p, D3DCOLOR_ARGB(alpha, r, g, b));
+}
 int CGame::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
@@ -312,89 +355,11 @@ CGame *CGame::GetInstance()
 	return __instance;
 }
 
-#define MAX_GAME_LINE 1024
-
-
-#define GAME_FILE_SECTION_UNKNOWN -1
-#define GAME_FILE_SECTION_SETTINGS 1
-#define GAME_FILE_SECTION_SCENES 2
-
-//belongs to CGame,
-void CGame::_ParseSection_SETTINGS(string line)
+bool CGame::IsColliding(float ml, float mt, float mr, float mb, float sl, float st, float sr, float sb)
 {
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 2) return;
-	if (tokens[0] == "start")
-		current_scene = atoi(tokens[1].c_str());
-	else
-		DebugOut(L"[ERROR] Unknown game setting %s\n", ToWSTR(tokens[0]).c_str());
-}
-
-//belongs to CGame, parse scene listed in line to scenes
-void CGame::_ParseSection_SCENES(string line)
-{
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 2) return;
-	int id = atoi(tokens[0].c_str());
-	LPCWSTR path = ToLPCWSTR(tokens[1]);
-
-	LPSCENE scene = new CPlayScene(id, path);
-	scenes[id] = scene;
-}
-
-/*
-	Load game campaign file and load/initiate first scene
-*/
-void CGame::Load(LPCWSTR gameFile)
-{
-	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
-
-	ifstream f;
-	f.open(gameFile);
-	char str[MAX_GAME_LINE];
-
-	// current resource section flag
-	int section = GAME_FILE_SECTION_UNKNOWN;
-
-	while (f.getline(str, MAX_GAME_LINE))
+	if (mt <= sb && mb >= st && ml <= sr && mr >= sl)
 	{
-		string line(str);
-
-		if (line[0] == '#') continue;	// skip comment lines	
-
-		if (line == "[SETTINGS]") { section = GAME_FILE_SECTION_SETTINGS; continue; }
-		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
-
-		//
-		// data section
-		//
-		switch (section)
-		{
-			case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
-			case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
-		}
+		return true;
 	}
-	f.close();
-
-	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n",gameFile);
-
-	SwitchScene(current_scene);
-}
-
-void CGame::SwitchScene(int scene_id)
-{
-	DebugOut(L"[INFO] Switching to scene %d\n", scene_id);
-
-	scenes[current_scene]->Unload();;
-
-	CTextures::GetInstance()->Clear();
-	CSprites::GetInstance()->Clear();
-	CAnimations::GetInstance()->Clear();
-
-	current_scene = scene_id;
-	LPSCENE s = scenes[scene_id];
-	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
-	s->Load();	
+	return false;
 }

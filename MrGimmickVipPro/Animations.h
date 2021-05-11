@@ -31,7 +31,11 @@ public:
 	CAnimation(int defaultTime = 100) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
 	void Add(int spriteId, DWORD time = 0);
 
-	void Render(float x, float y, int alpha = 255);
+	// void Render(float x, float y, int alpha = 255);
+	// void Render(float x, float y, bool isStop = false, int alpha = 255, int r = 255, int g = 255, int b = 255);
+	void Render(float x, float y, int alpha = 255, int r = 255, int g = 255, int b = 255);
+	//void RenderWithoutCamera(float x, float y, int alpha = 255, int r = 255, int g = 255, int b = 255);
+
 };
 
 typedef CAnimation *LPANIMATION;
@@ -46,6 +50,7 @@ public:
 	void Add(int id, LPANIMATION ani);
 	LPANIMATION Get(int id);
 	void Clear();
+	void Clear(vector<int> listId);
 
 	static CAnimations * GetInstance();
 };
@@ -67,6 +72,9 @@ public:
 	CAnimationSets();
 	void Add(int id, LPANIMATION_SET ani);
 	LPANIMATION_SET Get(unsigned int id);
+
+	void Clear();
+	void Clear(vector<int> listId);
 
 
 	static CAnimationSets * GetInstance();

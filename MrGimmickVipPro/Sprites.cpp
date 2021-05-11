@@ -26,6 +26,25 @@ void CSprite::Draw(float x, float y, int alpha)
 	game->Draw(x, y, texture, left, top, right, bottom, alpha);
 }
 
+void CSprite::Draw(float x, float y, int alpha, int r, int g, int b)
+{
+	CGame::GetInstance()->Draw(x + dx, y + dy, texture, left, top, right, bottom, alpha, r, g, b);
+}
+
+void CSprite::Draw(float x, float y, RECT rect, int alpha, int r, int g, int b)
+{
+	CGame::GetInstance()->Draw(x + dx, y + dy, texture, rect, alpha, r, g, b);
+}
+void CSprite::DrawWithoutCamera(float x, float y, int alpha, int r, int g, int b)
+{
+	CGame::GetInstance()->DrawWithoutCamera(x + dx, y + dy, texture, left, top, right, bottom, alpha, r, g, b);
+}
+
+void CSprite::DrawWithoutCamera(float x, float y, RECT rect, int alpha, int r, int g, int b)
+{
+	CGame::GetInstance()->DrawWithoutCamera(x + dx, y + dy, texture, rect, alpha, r, g, b);
+}
+
 void CSprites::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
 {
 	LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);
@@ -53,5 +72,14 @@ void CSprites::Clear()
 	sprites.clear();
 }
 
+void CSprites::Clear(vector<int> listId)
+{
+	for (size_t i = 0; i < listId.size(); i++)
+	{
+		LPSPRITE s = Get(listId.at(i));
 
+		delete s;
+		sprites.erase(listId.at(i));
+	}
+}
 

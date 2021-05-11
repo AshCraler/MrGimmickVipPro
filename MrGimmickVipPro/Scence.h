@@ -2,6 +2,11 @@
 
 #include <d3dx9.h>
 #include "KeyEventHandler.h"
+#include <unordered_map>
+#include <Windows.h>
+#include <string>
+
+using namespace std;
 
 class CScene
 {
@@ -10,6 +15,15 @@ protected:
 	int id;
 	LPCWSTR sceneFilePath;
 
+	vector<int> listIdTextures;
+	vector<int> listIdSprites;
+	vector<int> listIdAnimations;
+	vector<int> listIdAnimationSets;
+
+	void _ParseSection_TEXTURES(string line);
+	void _ParseSection_SPRITES(string line);
+	void _ParseSection_ANIMATIONS(string line);
+	void _ParseSection_ANIMATION_SETS(string line);
 public: 
 	CScene(int id, LPCWSTR filePath);
 

@@ -1,0 +1,23 @@
+﻿  Gimmick.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Gimmick.cpp(190,12): warning C4101: 'ry': unreferenced local variable
+  PlayScence.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(95,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(105,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(128,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(137,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(161,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(162,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(184,78): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(184,53): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(184,44): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(184,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(216,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(218,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(317,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(322,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(340,45): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(340,35): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(394,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(413,20): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  MrGimmickVipPro.vcxproj -> C:\Users\nghoa\Desktop\MrGimmickVipPro\Debug\MrGimmickVipPro.exe
