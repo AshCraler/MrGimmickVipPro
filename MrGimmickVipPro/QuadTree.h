@@ -6,7 +6,11 @@
 #include <fstream>
 #include "GameObject.h"
 #include "Node.h"
-#include "Ground.h"
+#include "./StaticObjects/Ground.h"
+#include "./StaticObjects/Elevator.h"
+#include "./StaticObjects/Hill.h"
+#include "./StaticObjects/MStair.h"
+
 using namespace std;
 class QuadTree
 {
@@ -22,6 +26,7 @@ public:
 	void _Load_NODES(string filePath);
 	void _Load_OBJECTS(string filePath);
 
+	//vector<Node*> GetNodeListWithCamera();
 	vector<CGameObject*> GetListObject();
 };
 

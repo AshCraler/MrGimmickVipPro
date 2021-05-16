@@ -20,11 +20,11 @@ CSprites *CSprites::GetInstance()
 	return __instance;
 }
 
-void CSprite::Draw(float x, float y, int alpha)
-{
-	CGame * game = CGame::GetInstance();
-	game->Draw(x, y, texture, left, top, right, bottom, alpha);
-}
+//void CSprite::Draw(float x, float y, int alpha)
+//{
+//	CGame * game = CGame::GetInstance();
+//	game->Draw(x, y, texture, left, top, right, bottom, alpha);
+//}
 
 void CSprite::Draw(float x, float y, int alpha, int r, int g, int b)
 {

@@ -180,6 +180,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
+
 	case 50:
 		obj = new Ground(x, this->GetMapHeight() - y, atof(tokens[5].c_str()), atof(tokens[6].c_str()));
 		break;
@@ -318,11 +319,16 @@ void CPlayScene::Update(DWORD dt)
 	{
 		coObjects.push_back(quadTree->GetListObject()[i]);
 	}
-
+	/*if (coObjects.size() >= 1) 
+		coObjects = coObjects;*/
+	CGameObject* o;
 	for (int i = 0; i < quadTree->GetListObject().size(); i++)
 	{
-		CGameObject* o = quadTree->GetListObject()[i];
-		quadTree->GetListObject()[i]->Update(dt, &coObjects);
+		o = quadTree->GetListObject()[i];
+		if (dynamic_cast<StaticObject*>(o)&& dynamic_cast<MStair*>(o)) {
+			dynamic_cast<MStair*>(o)->Update(dt);
+		}
+		else o->Update(dt, &coObjects);
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)

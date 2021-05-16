@@ -58,10 +58,27 @@ unordered_map<int, CGameObject*> Node::GetListObject() {
 }
 bool Node::OverlapWithCam() {
 	CCamera* cam = CCamera::GetInstance();
+	if (id == 133 && cam->GetY()>230)
+		id = 133;
+	bool overlap1 = (this->x > (cam->GetX() + cam->GetWidth()));
+	bool overlap2 = (this->x + this->width) < cam->GetX();
+	bool overlap3 = this->y > (cam->GetY() + cam->GetHeight());
+	bool overlap4 = (this->y + this->height) < cam->GetY();
+	bool overlap = !(overlap1 || overlap2 || overlap3 || overlap4);
+	/*bool overlap =
+		(x >= cam->GetX() && x <= cam->GetX() + cam->GetWidth() && y >= cam->GetY()  && y <= cam->GetY() + cam->GetHeight()) ||
+		(x + width >= cam->GetX() && x + width <= cam->GetX() + cam->GetWidth() && y >= cam->GetY() && y <= cam->GetY() + cam->GetHeight()) ||
+		(x + width >= cam->GetX() && x + width <= cam->GetX() + cam->GetWidth() && y + height >= cam->GetY() && y + height <= cam->GetY() + cam->GetHeight()) ||
+		(x >= cam->GetX() && x <= cam->GetX() + cam->GetWidth() && y + height >= cam->GetY() && y + height <= cam->GetY() + cam->GetHeight());*/
 
-	return !(this->x > (cam->GetX() + cam->GetWidth()) || 
-		(this->x + this->width) < cam->GetX() ||
-		this->y<(cam->GetY() - cam->GetHeight()) ||
-		(this->y - this->height)>cam->GetY());
+	/*bool overlap =
+		(cam->GetX() >= x&& cam->GetX()<=x+width && cam->GetY()>=y&&cam->GetY()<=y+height)||
+		(cam->GetX() + cam->GetWidth() >= x && cam->GetX() + cam->GetWidth() <= x + width && cam->GetY() >= y && cam->GetY() <= y + height) ||
+		(cam->GetX() + cam->GetWidth() >= x && cam->GetX() + cam->GetWidth() <= x + width && cam->GetY() + cam->GetHeight() >= y && cam->GetY() + cam->GetHeight() <= y + height) ||
+		(cam->GetX() >= x && cam->GetX() <= x + width && cam->GetY() + cam->GetHeight() >= y && cam->GetY() + cam->GetHeight() <= y + height) ||
+*/
 
+	/*if (overlap == true)
+		overlap = true;*/
+	return overlap;
 }

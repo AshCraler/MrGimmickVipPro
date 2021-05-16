@@ -40,7 +40,7 @@ void CAnimation::Render(float x, float y, int alpha, int r, int g, int b)
 	}
 
 	//frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
-	frames[currentFrame]->GetSprite()->DrawWithoutCamera(x, y, alpha, r, g, b);
+	frames[currentFrame]->GetSprite()->Draw(x, y, alpha, r, g, b);
 
 }
 

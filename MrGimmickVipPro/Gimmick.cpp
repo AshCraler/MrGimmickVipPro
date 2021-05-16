@@ -1,5 +1,5 @@
 #include "Gimmick.h"
-#include "Ground.h"
+#include "./StaticObjects/Ground.h"
 #include "Utils.h"
 
 CGimmick* CGimmick::instance = NULL;
@@ -22,7 +22,9 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	CGameObject::Update(dt);
 
 	// Simple fall down
-	vy = 0;
+	vy += 0.00001*dt;
+	/*if (y > 365)
+		y = y;*/
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -41,6 +43,7 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	{
 		x += dx;
 		y += dy;
+		vy += 0.00001 * dt;
 	}
 	else
 	{
@@ -115,7 +118,7 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	}
 	// clean up collision events
 	// for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	_checkSweptAABB(colliable_objects);
+	// _checkSweptAABB(colliable_objects);
 
 
 	instance = this;
@@ -188,10 +191,11 @@ void CGimmick::Render()
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 	float rx, ry;
-	if (x > 100) rx = 100; 
-	else rx = x;
-	DebugOut(L"location in Cammera: %f, %f\n", rx, y); 00;
-	CAnimationSets::GetInstance()->Get(1)->at(ani)->Render(rx, y, alpha);
+	/*if (x > 100) rx = 100; 
+	else rx = x;*/
+	//if (y > )
+//	DebugOut(L"location in Render: %f, %f\n", rx, y); 00;
+	CAnimationSets::GetInstance()->Get(1)->at(ani)->Render(x, y, alpha);
 	DebugOut(L"location in Render: %f, %f\n", x, y);
 	//animation_set->at(ani)->Render(x, y, alpha);
 
@@ -228,7 +232,10 @@ void CGimmick::SetState(int state)
 
 void CGimmick::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-
+	left = x;
+	top = y;
+	right = left + 16;
+	bottom = top + 16 - 1;
 }
 CGimmick* CGimmick::GetInstance() {
 	if (instance == NULL) instance = new CGimmick();

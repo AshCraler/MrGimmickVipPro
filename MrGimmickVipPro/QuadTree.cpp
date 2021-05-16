@@ -1,6 +1,7 @@
 #include "QuadTree.h"
 #include "Utils.h"
 #include "Gimmick.h"
+#include <algorithm>
 
 using namespace std;
 QuadTree* QuadTree::instance = NULL;
@@ -30,8 +31,8 @@ void QuadTree::BuildTree(string nodeFile, string objectFile)
 	for (auto node : listNode) {
 		id = node.first;
 		parent_id = id / 10;
-		if (parent_id == 12) 
-			parent_id = 12;
+		/*if (parent_id == 12) 
+			parent_id = 12;*/
 		if (listNode.find(parent_id)!=listNode.end()) {
 			child_id = id % 10;
 			listNode[parent_id]->GetChildren()[child_id] = node.second;
@@ -55,12 +56,39 @@ void QuadTree::_Load_OBJECTS(string filePath) {
 			CGimmick::GetInstance()->SetPosition(atoi(tokens[3].c_str()), atoi(tokens[4].c_str()));
 			listObject.push_back(CGimmick::GetInstance());
 			break;
-		case 50:
+		case 510:
+			o = new Hill(
+				atoi(tokens[3].c_str()),
+				atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str()) != 1);
+			listObject.push_back(o);
+			break;
+		case 520:
+			o = new Elevator(
+				atoi(tokens[3].c_str()),
+				atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str()) != 2);
+			listObject.push_back(o);
+			break;
+		case 530:
+			o = new MStair(
+				atoi(tokens[3].c_str()),
+				atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()));
+			listObject.push_back(o);
+			break;
+		case 500:
 		default:
 			o = new Ground(atoi(tokens[3].c_str()),
 				atoi(tokens[4].c_str()),
 				atoi(tokens[5].c_str()),
 				atoi(tokens[6].c_str()));
+			
 			listObject.push_back(o);
 		}
 	}
@@ -78,10 +106,10 @@ void QuadTree::_Load_NODES(string filePath) {
 		tokens = split(line, "\t");
 
 		Node* node = new Node(atoi(tokens[0].c_str()), 
-			atoi(tokens[1].c_str()),
-			atoi(tokens[2].c_str()),
 			atoi(tokens[3].c_str()),
-			atoi(tokens[4].c_str()));
+			atoi(tokens[4].c_str()),
+			atoi(tokens[1].c_str()),
+			atoi(tokens[2].c_str()));
 
 		nObject = tokens.size() - 5;
 		for (int i = 0; i < nObject; i++)
@@ -98,6 +126,20 @@ vector<CGameObject*> QuadTree::GetListObject() {
 	if (!listNode[1])
 		return vector<CGameObject*>();
 
+	Node* nd;
+	vector<CGameObject*> objects;
+	objects.push_back(CGimmick::GetInstance());
+	for (auto n : listNode) {
+		nd = (Node*)n.second;
+		if (nd->GetChildren()[0] != NULL || !nd->OverlapWithCam()) continue;
+		//objects.insert(objects.end(), nd->GetListObject().begin(), nd->GetListObject().end());
+		for (auto o : nd->GetListObject()) {
+			if (find(objects.begin(), objects.end(), o.second) != objects.end()) continue;
+			else objects.push_back(o.second);
+		}
+	}
+	
+
 	//vector<CGameObject*> listObject;
 	//unordered_map<int, CGameObject*> list = instance->listNode[1]->GetListObject();
 
@@ -107,5 +149,5 @@ vector<CGameObject*> QuadTree::GetListObject() {
 	//	listObject.push_back(obj.second);
 	//}
 
-	return listObject;
+	return objects;
 }

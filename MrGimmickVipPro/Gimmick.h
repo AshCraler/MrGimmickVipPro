@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Player.h"
 //SPEED
-#define GIMMICK_WALKING_SPEED		0.005f //0.1f
+#define GIMMICK_WALKING_SPEED		0.008f //0.1f
 #define GIMMICK_JUMP_SPEED_Y		0.5f
 #define GIMMICK_JUMP_DEFLECT_SPEED	0.2f
 #define GIMMICK_GRAVITY				0.0001f

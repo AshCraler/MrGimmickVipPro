@@ -21,10 +21,14 @@
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="StaticObjects\Hill.h" />
+    <ClInclude Include="StaticObjects\MStair.h" />
+    <ClInclude Include="StaticObjects\StaticObject.h" />
+    <ClInclude Include="StaticObjects\Elevator.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gimmick.h" />
-    <ClInclude Include="Ground.h" />
+    <ClInclude Include="StaticObjects\Ground.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
@@ -43,10 +47,14 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="StaticObjects\Hill.cpp" />
+    <ClCompile Include="StaticObjects\MStair.cpp" />
+    <ClCompile Include="StaticObjects\StaticObject.cpp" />
+    <ClCompile Include="StaticObjects\Elevator.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gimmick.cpp" />
-    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="StaticObjects\Ground.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />

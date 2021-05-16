@@ -88,7 +88,7 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	D3DXVECTOR3 position = CCamera::GetInstance()->GetPositionInCamera(p);
 	// position.y += deviation_y;
 
-	spriteHandler->Draw(texture, &rect, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	spriteHandler->Draw(texture, &rect, NULL, &position, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 }
 void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT rect, int alpha, int r, int g, int b)
 {
