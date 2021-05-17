@@ -56,6 +56,22 @@ void QuadTree::_Load_OBJECTS(string filePath) {
 			CGimmick::GetInstance()->SetPosition(atoi(tokens[3].c_str()), atoi(tokens[4].c_str()));
 			listObject.push_back(CGimmick::GetInstance());
 			break;
+		case 51:
+		case 52:
+			o = new BigPrize(
+				atoi(tokens[3].c_str()),
+				atoi(tokens[4].c_str()),
+				atoi(tokens[2].c_str()) - 51);
+			listObject.push_back(o);
+			break;
+		case 60:
+		case 61:
+			o = new Jar(
+				atoi(tokens[3].c_str()),
+				atoi(tokens[4].c_str()),
+				atoi(tokens[2].c_str()) - 60);
+			listObject.push_back(o);
+			break;
 		case 510:
 			o = new Hill(
 				atoi(tokens[3].c_str()),

@@ -10,7 +10,8 @@
 #include "./StaticObjects/Elevator.h"
 #include "./StaticObjects/Hill.h"
 #include "./StaticObjects/MStair.h"
-
+#include "./Items/BigPrize.h"
+#include "./Items/Jar.h"
 using namespace std;
 class QuadTree
 {

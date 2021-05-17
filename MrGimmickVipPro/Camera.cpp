@@ -50,7 +50,7 @@ void CCamera::HandleUpdateFollowPlayer(int mapWidth, int mapHeight)
 	CPlayer* player = CGimmick::GetInstance();;
 
 	player->GetPosition(player_x, player_y);
-	DebugOut(L"location in Cammera: %f, %f\n", player_x, player_y);
+	//DebugOut(L"location in Cammera: %f, %f\n", player_x, player_y);
 
  	if (mapWidth > width - 15) {
 		if (player_x < (width - 15) / 2) {
@@ -80,7 +80,7 @@ void CCamera::HandleUpdateFollowPlayer(int mapWidth, int mapHeight)
 		cy = mapHeight > height;
 	}
 	if (cy < 0) cy = 0;
-	DebugOut(L"location in Cammera: %f, %f\n", cx, cy);
+	//DebugOut(L"location in Cammera: %f, %f\n", cx, cy);
 
 	if (is_follow_player) {
 		this->SetCameraPosition((int)cx, (int)cy);

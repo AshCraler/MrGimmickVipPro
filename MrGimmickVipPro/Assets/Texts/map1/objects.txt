@@ -38,5 +38,5 @@
 36	MStair	530	369	80	32	16
 37	MStair	530	305	80	32	16
 38	MStair	530	193	120	32	16
-39	Flower Pot	41	67	69	24	43
-40	Orange Liquid	320	416	288	16	16
+39	Flower Pot	51	67	69	24	43
+40	Orange Liquid	61	416	288	16	16

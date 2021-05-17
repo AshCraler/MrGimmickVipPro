@@ -405,7 +405,8 @@ void CPlayScene::Render()
 	//player->Render();
 	float x, y;
 	player->GetPosition(x, y);
-	DebugOut(L"location in PlayScene: %f, %f\n", x, y);
+	// DebugOut(L"location in PlayScene: %f, %f\n", x, y);
+	ScorePanel::Render();
 
 	//scoreBoard->Render();
 	

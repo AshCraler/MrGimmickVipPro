@@ -20,7 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="Enemies\Enemy.h" />
+    <ClInclude Include="Items\BigPrize.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Items\Item.h" />
+    <ClInclude Include="Items\Jar.h" />
+    <ClInclude Include="ScorePanel\ScorePanel.h" />
+    <ClInclude Include="Enemies\SmallBlackBug.h" />
     <ClInclude Include="StaticObjects\Hill.h" />
     <ClInclude Include="StaticObjects\MStair.h" />
     <ClInclude Include="StaticObjects\StaticObject.h" />
@@ -46,7 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Enemies\Enemy.cpp" />
+    <ClCompile Include="Items\BigPrize.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Items\Item.cpp" />
+    <ClCompile Include="Items\Jar.cpp" />
+    <ClCompile Include="ScorePanel\ScorePanel.cpp" />
+    <ClCompile Include="Enemies\SmallBlackBug.cpp" />
     <ClCompile Include="StaticObjects\Hill.cpp" />
     <ClCompile Include="StaticObjects\MStair.cpp" />
     <ClCompile Include="StaticObjects\StaticObject.cpp" />

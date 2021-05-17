@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "TileMap.h"
 #include "QuadTree.h"
+#include "./ScorePanel/ScorePanel.h"
 
 class CPlayScene: public CScene
 {
