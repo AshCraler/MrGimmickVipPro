@@ -20,7 +20,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 }
 
 // NOTE: sometimes Animation object is NULL ??? HOW ??? 
-void CAnimation::Render(float x, float y, int alpha)
+void CAnimation::Render(float x, float y, int alpha, int r, int g, int b)
 {
 	DWORD now = GetTickCount();
 	if (currentFrame == -1)
@@ -39,7 +39,9 @@ void CAnimation::Render(float x, float y, int alpha)
 		}
 	}
 
-	frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
+	//frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
+	frames[currentFrame]->GetSprite()->Draw(x, y, alpha, r, g, b);
+
 }
 
 CAnimations * CAnimations::__instance = NULL;
@@ -63,6 +65,7 @@ LPANIMATION CAnimations::Get(int id)
 	return ani;
 }
 
+
 void CAnimations::Clear()
 {
 	for (auto x : animations)
@@ -72,6 +75,17 @@ void CAnimations::Clear()
 	}
 
 	animations.clear();
+}
+
+void CAnimations::Clear(vector<int> listId)
+{
+	for (size_t i = 0; i < listId.size(); i++)
+	{
+		LPANIMATION ani = Get(listId.at(i));
+
+		delete ani;
+		animations.erase(listId.at(i));
+	}
 }
 
 CAnimationSets::CAnimationSets()
@@ -97,4 +111,26 @@ LPANIMATION_SET CAnimationSets::Get(unsigned int id)
 void CAnimationSets::Add(int id, LPANIMATION_SET ani_set)
 {
 	animation_sets[id] = ani_set;
+}
+
+void CAnimationSets::Clear()
+{
+	for (auto x : animation_sets)
+	{
+		LPANIMATION_SET ani = x.second;
+		delete ani;
+	}
+
+	animation_sets.clear();
+}
+
+void CAnimationSets::Clear(vector<int> listId)
+{
+	for (size_t i = 0; i < listId.size(); i++)
+	{
+		LPANIMATION_SET ani = Get(listId.at(i));
+
+		delete ani;
+		animation_sets.erase(listId.at(i));
+	}
 }

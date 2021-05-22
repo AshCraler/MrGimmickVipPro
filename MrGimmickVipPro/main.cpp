@@ -21,17 +21,26 @@
 #include "Textures.h"
 
 #include "PlayScence.h"
+#include "SceneManager.h"
+#include "Camera.h"
+
 
 #define WINDOW_CLASS_NAME L"Mr Gimmick Vip PRO"
 #define MAIN_WINDOW_TITLE L"Mr Gimmick Vip PRO"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 200)
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 270
+#define SCREEN_HEIGHT 220
 
 #define MAX_FRAME_RATE 120
 
+
+#define CAMERA_WIDTH 256
+#define CAMERA_HEIGHT 150
+
 CGame *game;
+CSceneManager* sceneManager;
+
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -52,7 +61,11 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 */
 void Update(DWORD dt)
 {
-	CGame::GetInstance()->GetCurrentScene()->Update(dt);
+	//CGame::GetInstance()->GetCurrentScene()->Update(dt);
+	sceneManager->GetCurrentScene()->Update(dt);
+	/*if (sceneManager->IsSwitchScene()) {
+		sceneManager->SwitchScene();
+	}*/
 }
 
 /*
@@ -71,10 +84,15 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		CGame::GetInstance()->GetCurrentScene()->Render();
-
+		sceneManager->GetCurrentScene()->Render();
 		spriteHandler->End();
 		d3ddv->EndScene();
+		float x, y;
+		/*CGimmick::GetInstance()->GetPosition(x,y);
+		DebugOut(L"camera position\n", CCamera::GetInstance()->GetPosition().x, " ", CCamera::GetInstance()->GetPosition().y);
+		DebugOut(L"gimmick position\n", x, " ", y);*/
+
+
 	}
 
 	// Display back buffer content to the screen
@@ -150,7 +168,7 @@ int Run()
 		// dt: the time between (beginning of last frame) and now
 		// this frame: the frame we are about to render
 		DWORD dt = now - frameStart;
-
+		dt = 47;
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
@@ -166,6 +184,44 @@ int Run()
 
 	return 1;
 }
+void handleSwitchScene(CSceneManager* manager)
+{
+	int current_scene_id = manager->GetCurrentSceneId();
+	int next_scene_id = manager->GetNextSceneId();
+
+	LPSCENE current_scene = manager->GetScene(current_scene_id);
+	LPSCENE next_scene = manager->GetScene(next_scene_id);
+
+	if (next_scene_id < 1) {
+		CGame::GetInstance()->SetDeviationY(0);
+	}
+	else {
+		CCamera::GetInstance()->SetFollowPlayer(true);
+		CGame::GetInstance()->SetDeviationY(45);
+		CPlayScene* s = dynamic_cast<CPlayScene*>(next_scene);
+		if (current_scene_id > 0) {
+			CPlayScene* oldScene = dynamic_cast<CPlayScene*>(current_scene);
+			s->SetDefaultTime(oldScene->GetRemainTime());
+		}
+		s->position = -1;
+	}
+}
+
+LPSCENE getSceneById(int id, LPCWSTR path)
+{
+	LPSCENE scene;
+	/*if (id == -1) {
+		scene = new TitleScene(id, path);
+	}
+	else if (id == 0) {
+		scene = new IntroScene(id, path);
+	}
+	else {
+		scene = new CPlayScene(id, path);
+	}*/
+	scene = new CPlayScene(id, path);
+	return scene;
+}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -175,7 +231,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game->Init(hWnd);
 	game->InitKeyboard();
 
-	game->Load(L".txt");
+	//game->Load(L"Assets\\Texts\\gimmick-sample.txt");
+	CCamera::GetInstance()->SetSize(CAMERA_WIDTH, CAMERA_HEIGHT);
+
+	sceneManager = CSceneManager::GetInstance();
+	//require set getSceneById
+	sceneManager->SetFunctionGetSceneByID(getSceneById);
+	//require set handleSwitchScene
+	sceneManager->SetFunctionHandleSwitchScene(handleSwitchScene);
+	//require set player
+	sceneManager->SetPlayer(CGimmick::GetInstance());
+	sceneManager->Load(L"Assets\\Texts\\gimmick-sample.txt");
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

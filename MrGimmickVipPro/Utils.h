@@ -4,6 +4,7 @@
 
 #include <signal.h>
 #include <string.h>
+#include <string>
 #include <stdio.h>
 #include <stdarg.h>
 #include <time.h>
@@ -19,4 +20,3 @@ vector<string> split(string line, string delimeter = "\t");
 wstring ToWSTR(string st);
 
 LPCWSTR ToLPCWSTR(string st);
-

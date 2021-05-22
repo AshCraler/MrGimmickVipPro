@@ -20,28 +20,64 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="Enemies\Enemy.h" />
+    <ClInclude Include="Items\BigPrize.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Items\Item.h" />
+    <ClInclude Include="Items\Jar.h" />
+    <ClInclude Include="ScorePanel\ScorePanel.h" />
+    <ClInclude Include="Enemies\SmallBlackBug.h" />
+    <ClInclude Include="StaticObjects\Hill.h" />
+    <ClInclude Include="StaticObjects\MStair.h" />
+    <ClInclude Include="StaticObjects\StaticObject.h" />
+    <ClInclude Include="StaticObjects\Elevator.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gimmick.h" />
+    <ClInclude Include="StaticObjects\Ground.h" />
     <ClInclude Include="KeyEventHandler.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScence.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Scence.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileMap.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Enemies\Enemy.cpp" />
+    <ClCompile Include="Items\BigPrize.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Items\Item.cpp" />
+    <ClCompile Include="Items\Jar.cpp" />
+    <ClCompile Include="ScorePanel\ScorePanel.cpp" />
+    <ClCompile Include="Enemies\SmallBlackBug.cpp" />
+    <ClCompile Include="StaticObjects\Hill.cpp" />
+    <ClCompile Include="StaticObjects\MStair.cpp" />
+    <ClCompile Include="StaticObjects\StaticObject.cpp" />
+    <ClCompile Include="StaticObjects\Elevator.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gimmick.cpp" />
+    <ClCompile Include="StaticObjects\Ground.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScence.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Scence.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
@@ -58,32 +94,32 @@
     <ProjectGuid>{00DD839B-5967-4BC5-AFA5-E89D688CC071}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MrGimmickVipPro</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -131,11 +167,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -150,6 +188,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

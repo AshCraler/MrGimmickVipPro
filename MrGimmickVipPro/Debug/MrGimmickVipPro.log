@@ -1,0 +1,121 @@
+﻿  Animations.cpp
+  Enemy.cpp
+  BigPrize.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\Item.h(12,65): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\BigPrize.cpp(3,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\BigPrize.cpp(4,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\BigPrize.cpp(29,49): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\BigPrize.cpp(29,35): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+  Camera.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Camera.cpp(60,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Camera.cpp(76,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Camera.cpp(86,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Camera.cpp(86,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Item.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\Item.h(12,65): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Jar.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\Item.h(12,65): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\Jar.cpp(18,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\Jar.cpp(19,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  ScorePanel.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\ScorePanel\ScorePanel.cpp(6,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\ScorePanel\ScorePanel.cpp(17,5): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\ScorePanel\ScorePanel.cpp(16,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  SmallBlackBug.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Enemies\SmallBlackBug.cpp(3,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Enemies\SmallBlackBug.cpp(4,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Hill.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\StaticObjects\Hill.cpp(19,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\StaticObjects\Hill.cpp(20,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  MStair.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\StaticObjects\MStair.cpp(34,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\StaticObjects\MStair.cpp(35,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\StaticObjects\MStair.cpp(36,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  StaticObject.cpp
+  Elevator.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\StaticObjects\Elevator.cpp(37,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\StaticObjects\Elevator.cpp(38,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\StaticObjects\Elevator.cpp(39,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Game.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\Item.h(12,65): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  GameObject.cpp
+  Gimmick.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\Item.h(12,65): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Gimmick.cpp(116,65): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Gimmick.cpp(120,101): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Gimmick.cpp(242,8): warning C4101: 'rx': unreferenced local variable
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Gimmick.cpp(242,12): warning C4101: 'ry': unreferenced local variable
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Gimmick.cpp(267,43): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Gimmick.cpp(280,44): warning C4305: 'argument': truncation from 'double' to 'float'
+  Ground.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\StaticObjects\Ground.cpp(27,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\StaticObjects\Ground.cpp(28,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  main.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\Item.h(12,65): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\main.cpp(90,12): warning C4101: 'y': unreferenced local variable
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\main.cpp(90,9): warning C4101: 'x': unreferenced local variable
+  Node.cpp
+  Player.cpp
+  PlayScence.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\Item.h(12,65): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(95,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(105,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(128,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(137,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(161,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(162,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(185,78): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(185,53): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(185,44): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(185,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(217,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(219,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(318,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(325,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(346,45): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(346,35): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(400,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\PlayScence.cpp(420,20): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  QuadTree.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Items\Item.h(12,65): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\QuadTree.cpp(56,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\QuadTree.cpp(56,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\QuadTree.cpp(53,7): warning C4101: 'i': unreferenced local variable
+  Scence.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Scence.cpp(64,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Scence.cpp(74,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Scence.cpp(97,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\Scence.cpp(106,21): warning C4018: '<': signed/unsigned mismatch
+  SceneManager.cpp
+  Sprites.cpp
+  Textures.cpp
+  Tile.cpp
+  TileMap.cpp
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(30,12): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(40,12): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(46,13): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(58,53): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(59,53): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(60,29): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(61,29): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(88,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(93,78): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(98,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nghoa\Desktop\MrGimmickVipPro\MrGimmickVipPro\TileMap.cpp(103,75): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  tinystr.cpp
+  tinyxml.cpp
+  tinyxmlerror.cpp
+  tinyxmlparser.cpp
+  Utils.cpp
+  Generating Code...
+  MrGimmickVipPro.vcxproj -> C:\Users\nghoa\Desktop\MrGimmickVipPro\Debug\MrGimmickVipPro.exe

@@ -56,6 +56,9 @@ public:
 
 	int nx;	 
 
+	int width;
+	int height;
+
 	int state;
 
 	DWORD dt; 
@@ -67,6 +70,9 @@ public:
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
+
+	int GetWidth() { return width; }
+	int GetHeight() { return height; }
 
 	int GetState() { return this->state; }
 
