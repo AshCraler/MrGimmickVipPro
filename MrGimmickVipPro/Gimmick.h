@@ -4,11 +4,12 @@
 #include "Utils.h"
 #include "Game.h"
 #include "StaticObjects/MStair.h"
+#include "Textures.h"
 //SPEED
 #define GIMMICK_WALKING_SPEED		0.02f //0.1f
 #define GIMMICK_JUMP_SPEED_Y		0.05f
 #define GIMMICK_JUMP_DEFLECT_SPEED	0.2f
-#define GIMMICK_GRAVITY				0.00001f
+#define GRAVITY						0.00001f
 #define GIMMICK_FRICTION_FORCE		0.0001f
 #define GIMMICK_DIE_DEFLECT_SPEED	0.5f
 
@@ -85,7 +86,7 @@ public:
 	void SetY(float _y);
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom); //chua dinh nghia
-
+	void RenderBoundingBox();
 	static CGimmick* GetInstance();
 	void _checkSweptAABB(vector<LPGAMEOBJECT>* co);
 };

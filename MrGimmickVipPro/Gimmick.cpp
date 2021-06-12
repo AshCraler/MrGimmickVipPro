@@ -27,8 +27,8 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 	
 
 	// Simple fall down
-	//vy += GIMMICK_GRAVITY*dt;
-	SetVY(vy + GIMMICK_GRAVITY * dt);
+	//vy += GRAVITY*dt;
+	SetVY(vy + GRAVITY * dt);
 	/*if (y > 365)
 		y = y;*/
 
@@ -65,7 +65,7 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 			SetY(y + dy);
 		}
 		
-		// SetVY(vy + GIMMICK_GRAVITY * dt);
+		// SetVY(vy + GRAVITY * dt);
 	}
 	else
 	{
@@ -101,7 +101,7 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 				if (e->ny < 0) {
 					if (CGame::GetInstance()->IsKeyDown(208)) {
 						dynamic_cast<Item*>(e->obj)->SetTaken(true);
-						SetVY(GIMMICK_GRAVITY);
+						SetVY(GRAVITY);
 						continue;
 					}
 					else SetVY(0);
@@ -135,7 +135,7 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 				}
  				else if (e->ny < 0 ) {
 					if (dynamic_cast<Elevator*>(e->obj)) {
-						// SetVY(vy + GIMMICK_GRAVITY * dt);
+						// SetVY(vy + GRAVITY * dt);
 						SetY(y + vy * dt);
 						SetStandingOnElevator(dynamic_cast<Elevator*>(e->obj)->GetDirection() ? 1 : -1, 
 							dynamic_cast<Elevator*>(e->obj)->x, 
@@ -152,7 +152,7 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 							dynamic_cast<MStair*>(e->obj)->y,
 							dynamic_cast<MStair*>(e->obj)) ;
 					}
-					else SetVY(GIMMICK_GRAVITY);
+					else SetVY(GRAVITY);
 				}
 				else {
 					SetVY(0);
@@ -326,7 +326,24 @@ void CGimmick::GetBoundingBox(float & left, float & top, float & right, float & 
 	left = x;
 	top = y;
 	right = left + 16;
-	bottom = top + 16 - 1;
+	bottom = top + 16 -1 ;
+}
+void CGimmick::RenderBoundingBox()
+{
+	D3DXVECTOR3 p(x, y, 0);
+	RECT rect;
+
+	LPDIRECT3DTEXTURE9 bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
+
+	float l, t, r, b;
+
+	GetBoundingBox(l, t, r, b);
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = (int)r - (int)l;
+	rect.bottom = (int)b - (int)t;
+
+	CGame::GetInstance()->Draw(x + 4, y + 6, bbox, rect.left, rect.top, rect.right, rect.bottom, 70);
 }
 CGimmick* CGimmick::GetInstance() {
 	if (instance == NULL) instance = new CGimmick();

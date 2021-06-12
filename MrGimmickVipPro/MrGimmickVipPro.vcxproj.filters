@@ -221,5 +221,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Map.txt" />
+    <Text Include="..\..\..\..\Desktop\1.txt" />
   </ItemGroup>
 </Project>

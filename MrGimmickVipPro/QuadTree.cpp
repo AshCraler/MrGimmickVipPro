@@ -56,6 +56,12 @@ void QuadTree::_Load_OBJECTS(string filePath) {
 			CGimmick::GetInstance()->SetPosition(atoi(tokens[3].c_str()), atoi(tokens[4].c_str()));
 			listObject.push_back(CGimmick::GetInstance());
 			break;
+		case 18:
+			o = new SmallBlackBug(
+				atoi(tokens[3].c_str()),
+				atoi(tokens[4].c_str()));
+			listObject.push_back(o);
+			break;
 		case 51:
 		case 52:
 			o = new BigPrize(
@@ -99,13 +105,17 @@ void QuadTree::_Load_OBJECTS(string filePath) {
 			listObject.push_back(o);
 			break;
 		case 500:
-		default:
 			o = new Ground(atoi(tokens[3].c_str()),
 				atoi(tokens[4].c_str()),
 				atoi(tokens[5].c_str()),
 				atoi(tokens[6].c_str()));
 			
 			listObject.push_back(o);
+			break;
+
+		default:
+			break;
+
 		}
 	}
 	pFile.close();
@@ -118,7 +128,7 @@ void QuadTree::_Load_NODES(string filePath) {
 	int nObject;
 	while (pFile.good()) {
 		getline(pFile, line);
-		if (line[0] == '#') continue;
+		if (line[0] == '#' || line == "") continue;
 		tokens = split(line, "\t");
 
 		Node* node = new Node(atoi(tokens[0].c_str()), 
@@ -144,9 +154,12 @@ vector<CGameObject*> QuadTree::GetListObject() {
 
 	Node* nd;
 	vector<CGameObject*> objects;
+
 	objects.push_back(CGimmick::GetInstance());
+
 	for (auto n : listNode) {
 		nd = (Node*)n.second;
+
 		if (nd->GetChildren()[0] != NULL || !nd->OverlapWithCam()) continue;
 		//objects.insert(objects.end(), nd->GetListObject().begin(), nd->GetListObject().end());
 		for (auto o : nd->GetListObject()) {

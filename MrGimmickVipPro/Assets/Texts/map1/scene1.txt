@@ -1,7 +1,7 @@
 # id	file_path	transparent_color_r	g	b
 [TEXTURES]
 1	Assets\Images\gimmick.png	0	0	254
-2	Assets\Images\enemies.jpg	57	189	254
+2	Assets\Images\enemies.png	57	189	255
 3 	Assets\Images\bosses.jpg	0	0	254
 4 	Assets\Images\hazards.jpg	204	102	185
 5 	Assets\Images\prizes.png	60	188	253
@@ -150,7 +150,7 @@
 210101	678	1	694	17	2
 210102	660	1	676	17	2
 210103	642	1	658	17	2
-210104	624	2	640	17	3
+210104	624	2	640	17	2
 
 	#tiles
 200000	0	0	239	392	10
@@ -303,8 +303,8 @@
 50	500	501	510	511	512	513	514	515	516	517
 
 [SETTINGS]
-map_width	65
-map_height	24
-objects	Assets\Texts\map1\objects.txt
-title_map	Assets\Texts\map1\matrix.txt	200000
-quadtree	Assets\Texts\map1\nodes.txt	Assets\Texts\map1\objects.txt
+map_width	64
+map_height	12
+objects	Assets\Texts\map1\objects_5.txt
+title_map	Assets\Texts\map1\5.txt	200000
+quadtree	Assets\Texts\map1\nodes_5.txt	Assets\Texts\map1\objects_5.txt

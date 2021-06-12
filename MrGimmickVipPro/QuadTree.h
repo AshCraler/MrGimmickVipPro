@@ -12,6 +12,7 @@
 #include "./StaticObjects/MStair.h"
 #include "./Items/BigPrize.h"
 #include "./Items/Jar.h"
+#include "./Enemies/SmallBlackBug.h"
 using namespace std;
 class QuadTree
 {

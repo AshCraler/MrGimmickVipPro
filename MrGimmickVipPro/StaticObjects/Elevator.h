@@ -15,6 +15,7 @@ public:
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	float GetSpeed() { return direction?ELEVATOR_SPEED:-ELEVATOR_SPEED; }
+	//1 is right, 2 is left
 	bool GetDirection() { return direction; }
 	static float GetSpeedManipulation() { return SPEED_MANIPULATION; }
 	Elevator(int width, int height);

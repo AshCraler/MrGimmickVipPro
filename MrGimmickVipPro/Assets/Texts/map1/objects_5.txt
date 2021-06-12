@@ -1,0 +1,17 @@
+#id	name	type	x	y	width	height	ani_set_id
+0	Gimmick	1	960	144	0	0	1
+1	Ground	500	1008	0	16	192
+2	Ground	500	944	128	64	16
+3	Ground	500	640	160	352	32
+4	Ground	500	448	144	16	16
+5	Ground	500	496	144	16	16
+6	Ground	500	544	144	16	16
+7	Ground	500	592	144	16	16
+8	Ground	500	320	160	32	32
+9	Ground	500	384	160	32	32
+10	Ground	500	144	160	144	32
+11	Ground	500	240	0	32	128
+12	Ground	500	0	0	240	16
+13	Ground	500	0	16	16	192
+14	Ground	500	48	128	64	64
+15	Ground	500	976	64	32	64
