@@ -24,7 +24,7 @@ void CScene::_ParseSection_TEXTURES(string line)
 	int G = atoi(tokens[3].c_str());
 	int B = atoi(tokens[4].c_str());
 
-	CTextures::GetInstance()->Add(texID, path.c_str(), D3DCOLOR_XRGB(R, G, B));
+	CTextures::GetInstance()->Add(texID, path.c_str(), D3DCOLOR_XRGB(R, G, B), atoi(tokens[5].c_str()));
 }
 
 void CScene::_ParseSection_SPRITES(string line)
@@ -40,14 +40,30 @@ void CScene::_ParseSection_SPRITES(string line)
 	int b = atoi(tokens[4].c_str());
 	int texID = atoi(tokens[5].c_str());
 
+	//LPDIRECT3DTEXTURE9 tex = CTextures::GetInstance()->Get(texID);
+	//if (tex == NULL)
+	//{
+	//	DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+	//	return;
+	//}
+
+	//CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+
 	LPDIRECT3DTEXTURE9 tex = CTextures::GetInstance()->Get(texID);
+	int height = CTextures::GetInstance()->GetHeight(texID);
 	if (tex == NULL)
 	{
 		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
 		return;
 	}
+	if (texID < 10) {
+		CSprites::GetInstance()->Add(ID, l, height - b, r, height - t, tex);
 
-	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+	}
+	else {
+		CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+
+	}
 }
 
 void CScene::_ParseSection_ANIMATIONS(string line)

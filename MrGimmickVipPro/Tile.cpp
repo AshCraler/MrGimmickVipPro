@@ -1,9 +1,14 @@
 #include "Tile.h"
 
 
+unordered_map<int, vector<RECT>> Tile::bounds;
+unordered_map<int, int> Tile::spriteTimes;
 Tile::Tile()
 {
 	camera = CCamera::GetInstance();
+	boundSetID = -1;
+	changeSpriteTimer = GetTickCount();
+
 }
 
 Tile::~Tile()
@@ -15,6 +20,9 @@ Tile::Tile(int _id, RECT _bound, D3DXVECTOR2 _position)
 	id = _id;
 	bound = _bound;
 	position = _position;
+	boundSetID = -1;
+	changeSpriteTimer = GetTickCount();
+
 }
 
 void Tile::setID(int _id)
@@ -39,7 +47,16 @@ void Tile::SetSprite(LPSPRITE _sprite)
 
 void Tile::Render()
 {
-	sprite->Draw(position.x, position.y, bound);
+	if(boundSetID==-1)
+		sprite->Draw(position.x, position.y, bound);
+	else {
+		sprite->Draw(position.x, position.y, bounds[boundSetID][startAt]);
+		if (GetTickCount() - changeSpriteTimer > spriteTimes[boundSetID]) {
+			int d = (GetTickCount() - changeSpriteTimer)/ spriteTimes[boundSetID];
+			startAt = (startAt + 1) % bounds[boundSetID].size();
+			changeSpriteTimer = GetTickCount();
+		}
+	}
 }
 
 bool Tile::CheckInBoundCamera(int screenWidth, int screenHeight)

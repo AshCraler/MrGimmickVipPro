@@ -20,13 +20,30 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="Enemies\Bosses\BlackMan.h" />
+    <ClInclude Include="Enemies\Utility\JumpingCommandBox.h" />
+    <ClInclude Include="Enemies\Bosses\BrownStuff.h" />
+    <ClInclude Include="Enemies\Bosses\Boss.h" />
+    <ClInclude Include="DynamicObjects\Boat.h" />
+    <ClInclude Include="DynamicObjects\DynamicObject.h" />
     <ClInclude Include="Enemies\Enemy.h" />
+    <ClInclude Include="Enemies\GreenFatStuff.h" />
+    <ClInclude Include="DynamicObjects\HangingMachine.h" />
+    <ClInclude Include="DynamicObjects\GunMachine.h" />
+    <ClInclude Include="DynamicObjects\HangingElevator.h" />
+    <ClInclude Include="Enemies\Bosses\GiantBlackBug.h" />
     <ClInclude Include="Items\BigPrize.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Items\Item.h" />
     <ClInclude Include="Items\Jar.h" />
+    <ClInclude Include="Enemies\PinkWorm.h" />
+    <ClInclude Include="Enemies\LongNeckedBird.h" />
+    <ClInclude Include="StaticObjects\Portal.h" />
+    <ClInclude Include="StaticObjects\Pipe.h" />
     <ClInclude Include="ScorePanel\ScorePanel.h" />
     <ClInclude Include="Enemies\SmallBlackBug.h" />
+    <ClInclude Include="Enemies\SmallBlackBugWithAntena.h" />
+    <ClInclude Include="DynamicObjects\Shell.h" />
     <ClInclude Include="StaticObjects\Hill.h" />
     <ClInclude Include="StaticObjects\MStair.h" />
     <ClInclude Include="StaticObjects\StaticObject.h" />
@@ -48,17 +65,38 @@
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
+    <ClInclude Include="Enemies\Turtle.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="DynamicObjects\WheelGunMachine.h" />
+    <ClInclude Include="StaticObjects\Window.h" />
+    <ClInclude Include="DynamicObjects\WindowThrowingShell.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Enemies\Bosses\BlackMan.cpp" />
+    <ClCompile Include="Enemies\Utility\JumpingCommandBox.cpp" />
+    <ClCompile Include="Enemies\Bosses\BrownStuff.cpp" />
+    <ClCompile Include="Enemies\Bosses\Boss.cpp" />
+    <ClCompile Include="DynamicObjects\Boat.cpp" />
+    <ClCompile Include="DynamicObjects\DynamicObject.cpp" />
     <ClCompile Include="Enemies\Enemy.cpp" />
+    <ClCompile Include="Enemies\GreenFatStuff.cpp" />
+    <ClCompile Include="DynamicObjects\HangingMachine.cpp" />
+    <ClCompile Include="DynamicObjects\GunMachine.cpp" />
+    <ClCompile Include="DynamicObjects\HangingElevator.cpp" />
+    <ClCompile Include="Enemies\Bosses\GiantBlackBug.cpp" />
     <ClCompile Include="Items\BigPrize.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Items\Item.cpp" />
     <ClCompile Include="Items\Jar.cpp" />
+    <ClCompile Include="Enemies\PinkWorm.cpp" />
+    <ClCompile Include="Enemies\LongNeckedBird.cpp" />
+    <ClCompile Include="StaticObjects\Portal.cpp" />
+    <ClCompile Include="StaticObjects\Pipe.cpp" />
     <ClCompile Include="ScorePanel\ScorePanel.cpp" />
     <ClCompile Include="Enemies\SmallBlackBug.cpp" />
+    <ClCompile Include="Enemies\SmallBlackBugWithAntena.cpp" />
+    <ClCompile Include="DynamicObjects\Shell.cpp" />
     <ClCompile Include="StaticObjects\Hill.cpp" />
     <ClCompile Include="StaticObjects\MStair.cpp" />
     <ClCompile Include="StaticObjects\StaticObject.cpp" />
@@ -82,12 +120,25 @@
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
+    <ClCompile Include="Enemies\Turtle.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="DynamicObjects\WheelGunMachine.cpp" />
+    <ClCompile Include="StaticObjects\Window.cpp" />
+    <ClCompile Include="DynamicObjects\WindowThrowingShell.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MrGimmickVipPro.aps" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\..\..\Downloads\Map - Copy.txt" />
+    <Text Include="..\..\..\Downloads\Map.txt" />
+    <Text Include="Assets\Texts\map2\scene1\scene.txt" />
+    <Text Include="Assets\Texts\map2\scene2\scene.txt" />
+    <Text Include="Assets\Texts\map2\scene3\scene.txt" />
+    <Text Include="Assets\Texts\map2\scene4\scene.txt" />
+    <Text Include="Assets\Texts\map2\scene5\scene.txt" />
+    <Text Include="Assets\Texts\map2\scene6\scene.txt" />
+    <Text Include="Assets\Texts\map2\scene7\scene.txt" />
     <Text Include="Map.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

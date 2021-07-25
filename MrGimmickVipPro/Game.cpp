@@ -52,7 +52,7 @@ void CGame::Init(HWND hWnd)
 		OutputDebugString(L"[ERROR] CreateDevice failed\n");
 		return;
 	}
-
+	
 	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
 
 	// Initialize sprite helper from Direct3DX helper library
@@ -272,11 +272,11 @@ void CGame::SweptAABB(
 	//
 
 	float bl = dx > 0 ? ml : ml + dx;
-	float bt = dy > 0 ? mt : mt + dy;
+	float bt = dy < 0 ? mt : mt + dy;
 	float br = dx > 0 ? mr + dx : mr;
-	float bb = dy > 0 ? mb + dy : mb;
+	float bb = dy < 0 ? mb + dy : mb;
 
-	if (br < sl || bl > sr || bb < st || bt > sb) return;
+	if (br < sl || bl > sr || bb > st || bt < sb) return;
 
 
 	if (dx == 0 && dy == 0) return;		// moving object is not moving > obvious no collision
@@ -293,12 +293,12 @@ void CGame::SweptAABB(
 	}
 
 
-	if (dy > 0)
+	if (dy < 0)
 	{
 		dy_entry = st - mb;
 		dy_exit = sb - mt;
 	}
-	else if (dy < 0)
+	else if (dy > 0)
 	{
 		dy_entry = sb - mt;
 		dy_exit = st - mb;
@@ -344,7 +344,7 @@ void CGame::SweptAABB(
 	else 
 	{
 		nx = 0.0f;
-		dy > 0?ny = -1.0f:ny = 1.0f;
+		dy > 0?ny = 1.0f:ny = -1.0f;
 	}
 
 }

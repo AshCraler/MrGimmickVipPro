@@ -54,8 +54,9 @@ void CPlayScene::_ParseSection_TEXTURES(string line)
 	int R = atoi(tokens[2].c_str());
 	int G = atoi(tokens[3].c_str());
 	int B = atoi(tokens[4].c_str());
-
-	CTextures::GetInstance()->Add(texID, path.c_str(), D3DCOLOR_XRGB(R, G, B));
+	if (texID == 6)
+		texID = texID;
+	CTextures::GetInstance()->Add(texID, path.c_str(), D3DCOLOR_XRGB(R, G, B), atoi(tokens[5].c_str())) ;
 }
 
 void CPlayScene::_ParseSection_SPRITES(string line)
@@ -72,13 +73,23 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 	int texID = atoi(tokens[5].c_str());
 
 	LPDIRECT3DTEXTURE9 tex = CTextures::GetInstance()->Get(texID);
+	int height = CTextures::GetInstance()->GetHeight(texID);
 	if (tex == NULL)
 	{
 		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
 		return; 
 	}
+	if (ID == 600201) {
+		ID = ID;
+	}
+	if (ID != 200000 && ID != 300000 && ID!= 400000) {
+		CSprites::GetInstance()->Add(ID, l, height - t, r, height - b, tex);
 
-	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+	}
+	else {
+		CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+
+	}
 }
 
 void CPlayScene::_ParseSection_ANIMATIONS(string line)
@@ -305,7 +316,7 @@ void CPlayScene::Load()
 
 	f.close();
 
-	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Assets\\Images\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Assets\\Images\\bbox.png", D3DCOLOR_XRGB(255, 255, 255), 0);
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
@@ -322,15 +333,27 @@ void CPlayScene::Update(DWORD dt)
 	/*if (coObjects.size() >= 1) 
 		coObjects = coObjects;*/
 	CGameObject* o;
-	for (int i = 0; i < quadTree->GetListObject().size(); i++)
+	for (int i = 1; i < quadTree->GetListObject().size(); i++)
 	{
 		o = quadTree->GetListObject()[i];
 		if (dynamic_cast<StaticObject*>(o)&& dynamic_cast<MStair*>(o)) {
 			dynamic_cast<MStair*>(o)->Update(dt);
 		}
+		else if (dynamic_cast<HangingMachine*>(o)) {
+			dynamic_cast<HangingMachine*>(o)->Update(dt);
+		}
+		else if (dynamic_cast<HangingElevator*>(o)) {
+			dynamic_cast<HangingElevator*>(o)->Update(dt);
+		}
+		else if (dynamic_cast<Window*>(o)) {
+			dynamic_cast<Window*>(o)->Update(dt);
+		}
+		else if (dynamic_cast<Boat*>(o)) {
+			dynamic_cast<Boat*>(o)->Update(dt);
+		}
 		else o->Update(dt, &coObjects);
 	}
-
+	player->Update(dt, &coObjects);
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
 
@@ -405,6 +428,12 @@ void CPlayScene::Render()
 	//player->Render();
 	float x, y;
 	player->GetPosition(x, y);
+
+	for (int i = 0; i < coObjects.size(); i++)
+	{
+		if(dynamic_cast<Pipe*>(coObjects[i]))
+			coObjects[i]->Render();
+	}
 	// DebugOut(L"location in PlayScene: %f, %f\n", x, y);
 	ScorePanel::Render();
 
@@ -468,6 +497,21 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		mario->SetState(GIMMICK_STATE_WALKING_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
 		mario->SetState(GIMMICK_STATE_WALKING_LEFT);
+	else if (game->IsKeyDown(DIK_SPACE))
+		mario->SetState(GIMMICK_STATE_JUMP);
+	else if (game->IsKeyDown(DIK_DOWN))
+		mario->SetState(GIMMICK_STATE_DOWN);
+	else if (game->IsKeyDown(DIK_UP))
+		mario->SetState(GIMMICK_STATE_UP);
+	else if (game->IsKeyDown(DIK_U))
+		mario->SetState(DIK_U);
+	else if (game->IsKeyDown(DIK_I))
+		mario->SetState(DIK_I);
+	else if (game->IsKeyDown(DIK_O))
+		mario->SetState(DIK_O);
 	else
 		mario->SetState(GIMMICK_STATE_IDLE);
+
+	if (game->IsKeyDown(DIK_A))
+		mario->SetState(GIMMICK_STATE_FORMING_STAR);
 }

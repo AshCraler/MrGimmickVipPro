@@ -5,6 +5,7 @@
 #define ELEVATOR_SPEED	0.00001f
 
 #define SPEED_MANIPULATION 0.01f
+#define ANIMATION_SET_ID	5200
 class Elevator : public StaticObject
 {
 	bool direction;

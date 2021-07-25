@@ -51,6 +51,8 @@ class CGame
 	D3DCOLOR backgroundColor;
 
 public:
+	float index=0.0f;
+
 	void InitKeyboard();
 	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }
 	void Init(HWND hWnd);

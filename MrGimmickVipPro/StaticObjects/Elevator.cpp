@@ -14,7 +14,7 @@ void Elevator::Render()
 	CAnimationSets::GetInstance()->Get(520)->at(2)->Render(startAtX +width-16, y + 16);*/
 	int numBlocks = width / 16;
 	for (int i = 0; i < numBlocks; i++) {
-		blocks[i]->at(direction?0:1)->Render(x + i * 16, y + 16);
+		blocks[i]->at(direction?0:1)->Render(x + i * 16, y - 3);
 	}
 	RenderBoundingBox();
 }
@@ -24,7 +24,7 @@ void Elevator::GetBoundingBox(float& l, float& t, float& r, float& b)
 	l = x;
 	t = y;
 	r = x + width;
-	b = y + height;
+	b = y - height;
 }
 
 Elevator::Elevator(int width, int height)
@@ -38,10 +38,10 @@ Elevator::Elevator(int x, int y, int width, int height, bool direction)
 	this->startAtX = this->x;
 	this->y = y;
 	this->width = width ;
-	this->height = height;
+	this->height = 16;
 	this->direction = direction;
-	SetAnimationSet(CAnimationSets::GetInstance()->Get(520));
-	int numBlocks = width / 16;
+	SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_ID));
+	int numBlocks = ceil(width / 16);
 	for (int i = 0; i < numBlocks; i++) {
 		blocks.push_back(animation_set);
 	}

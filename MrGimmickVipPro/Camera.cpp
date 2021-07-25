@@ -51,29 +51,123 @@ void CCamera::HandleUpdateFollowPlayer(int mapWidth, int mapHeight)
 
 	player->GetPosition(player_x, player_y);
 	//DebugOut(L"location in Cammera: %f, %f\n", player_x, player_y);
-
- 	if (mapWidth > width - 15) {
-		if (player_x < (width - 15) / 2) {
-			cx = 0;
-		}
-		else if (player_x + (width - 15) / 2 > mapWidth) {
-			cx = mapWidth - (width - 15);
+	if (dynamic_cast<CGimmick*>(player)->ISLocked()) {
+		int xF = dynamic_cast<CGimmick*>(player)->GetViewFrom(), xC = position.x;
+		if (mapWidth > width - 15) {
+			if (player_x < (width - 15) / 2) {
+				cx = 0;
+			}
+			else if (player_x + (width - 15) / 2 > mapWidth) {
+				cx = mapWidth - (width - 15);
+			}
+			else {
+				cx = player_x + (width - 15) / 2 - (width - 15);
+			}
 		}
 		else {
-			cx = player_x + (width - 15) / 2 - (width - 15);
+			cx = 0;
 		}
+		if (cx < xF) {
+			cx = xF ;
+
+			if (xC < cx) {
+				cx = xC + 2;
+			}
+			else if (xC > cx) {
+				cx = xC - 2;
+
+			}
+			else {
+				cx = xF;
+			}
+		}
+		else if (cx > xF) {
+			//cx = xC - 3;
+
+		}
+		else {
+			//cx = xF;
+
+		}
+		/*if (xC < xF) {
+			cx = xC + 3;
+		}
+		else if (xC > xF) {
+			cx = xC - 3;
+			
+		}
+		else {
+			cx = xF;
+			
+		}*/
+	}
+	else if (dynamic_cast<CGimmick*>(player)->IsLockedTo()) {
+		int xF = dynamic_cast<CGimmick*>(player)->GetViewTo(), xC = position.x;
+		if (mapWidth > width - 15) {
+			if (player_x < (width - 15) / 2) {
+				cx = 0;
+			}
+			else if (player_x + (width - 15) / 2 > mapWidth) {
+				cx = mapWidth - (width - 15);
+			}
+			else {
+				cx = player_x + (width - 15) / 2 - (width - 15);
+			}
+		}
+		else {
+			cx = 0;
+		}
+
+		if (cx +width< xF) {
+			//return;
+		}
+		else if (cx +width> xF) {
+			
+			cx = xF - width;
+			if (xC < cx) {
+				cx = xC + 2;
+			}
+			else if (xC > cx) {
+				cx = xC - 2;
+
+			}
+			else {
+				cx = xF;
+			}
+		}
+		else {
+			//cx = xC - width;
+		}
+		
 	}
 	else {
-		cx = 0;
+		if (mapWidth > width - 15) {
+			if (player_x < (width - 15) / 2) {
+				cx = 0;
+			}
+			else if (player_x + (width - 15) / 2 > mapWidth) {
+				cx = mapWidth - (width - 15);
+			}
+			else {
+				cx = player_x + (width - 15) / 2 - (width - 15);
+			}
+		}
+		else {
+			cx = 0;
+		}
 	}
+ 	
 
 	if (mapHeight > height)
 	{
 		if (player_y + player->GetHeight() / 2 < mapHeight - height / 2) {
-			cy = player_y + (player->GetHeight() / 2) - (height / 2);
+			cy = player_y - (player->GetHeight() / 2) + (height / 2);
+			if (cy < height) {
+				cy = height;
+			}
 		}
 		else {
-			cy = mapHeight - height;
+			cy = mapHeight ;
 		}
 	}
 	else {

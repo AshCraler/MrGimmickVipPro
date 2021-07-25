@@ -1,0 +1,33 @@
+#id	name	type	x	y	width	height	ani_set_id
+192
+0	Gimmick	1	480	190	0	0	1
+1	Hill	510	400	80	48	48	1
+2	Hill	510	256	128	32	32	1
+3	Hill	510	80	112	96	48	0
+4	Ground	500	80	160	96	32	
+5	Ground	500	256	160	32	32	
+6	Ground	500	400	128	0	64	
+7	Ground	500	448	80	48	112	
+8	Ground	500	496	0	16	192	
+9	Ground	500	352	128	96	64	
+10	Ground	500	288	128	32	64
+11	Ground	500	224	160	32	32	
+12	Ground	500	176	160	32	32	
+13	Ground	500	50	112	30	80	
+14	Ground	500	0	32	32	160	
+15	Ground	500	48	64	16	16	
+16	Ground	500	112	32	48	32	
+17	Ground	500	256	32	32	48	
+18	Ground	500	448	32	30	16	
+19	Ground	500	0	0	480	32	
+20	GunMachine	51	49	47	16	16	
+21	HangingMachine	50	353	32	14	19	
+22	HangingMachine	50	305	32	14	19	
+23	pipe	-10	32	144	16	16	1
+24	pipe	-10	32	160	16	16	1
+25	pipe	-10	32	176	16	16	1
+26	pipe	-10	480	0	16	16	1
+27	pipe	-10	480	16	16	16	1
+28	portal	-11	32	182	16	16	1	3
+29	SBB	18	56	95	16	16	0	-1
+30	JMB	900	49	96	3	16	0

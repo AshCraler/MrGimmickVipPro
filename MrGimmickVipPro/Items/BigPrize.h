@@ -10,7 +10,7 @@
 #define NUMBER_OF_SPARKLES	10
 #define PRIZE_ANIMATION_ID_STARTS_AT	500
 #define SPARKLE_ANIMATION_ID_STARTS_AT	2
-#define ANIMATION_SET_ID	50
+#define ANIMATION_SET_ID	500
 class BigPrize:public Item
 {
 	vector<CAnimation*> sparkles;

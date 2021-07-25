@@ -7,6 +7,7 @@ using namespace std;
 
 class CSprite
 {
+public:
 	int id;				// Sprite ID in the sprite database
 
 	int left; 

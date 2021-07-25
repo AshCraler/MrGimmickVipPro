@@ -1,7 +1,9 @@
 #pragma once
+
+#ifndef ENEMY_HEADER_H
+#define ENEMY_HEADER_H
 #include "../GameObject.h"
-#include "../Gimmick.h"
-class Enemy:public CGameObject
+class Enemy :public CGameObject
 {
 	string category = "ENEMY";
 protected:
@@ -19,4 +21,6 @@ public:
 	bool IsOutOfCamera() { return direction; }
 	int IsCarryingJar() { return carryJar; }
 };
+
+#endif
 

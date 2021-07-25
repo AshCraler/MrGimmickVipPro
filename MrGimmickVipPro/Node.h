@@ -12,6 +12,7 @@ public:
 	~Node();
 	void Insert(int id, LPGAMEOBJECT obj);
 	unordered_map<int, LPGAMEOBJECT> GetListObject();
+	int GetHeight() { return height; }
 	void Unload();
 	Node** GetChildren();
 	bool OverlapWithCam();

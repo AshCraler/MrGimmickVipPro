@@ -1,0 +1,29 @@
+#id	name	type	x	y	width	height	ani_set_id
+192
+0	Gimmick	1	54	100	0	0	1
+1	Ground	500	32	128	96	48	
+2	Ground	500	160	128	32	48	
+3	Ground	500	224	128	32	48	
+4	Ground	500	288	128	96	48	
+5	Ground	500	416	96	32	80	
+6	Ground	500	480	128	16	48	
+7	Ground	500	1744	144	128	32	
+8	Ground	500	1648	128	32	16	
+9	Ground	500	1632	80	16	16	
+10	Ground	500	1616	32	16	16	
+11	FallingShell	-15	896	48	32	32	
+12	FallingShell	-15	976	48	32	32	
+13	FallingShell	-15	1056	48	32	32	
+14	FallingShell	-15	1136	48	32	32	
+15	FallingShell	-15	1216	48	32	32	
+16	FallingShell	-15	1296	48	32	32	
+17	FallingShell	-15	1376	48	32	32	
+18	FallingShell	-15	1456	48	32	32	
+19	FallingShell	-15	1536	48	32	32	
+20	Boat	54	497	160	1600	16
+21	Turtle	23	304	112	288	383
+22	Turtle	23	422	80	416	447
+23	LVTP	905	1600	100	32	100	0	1776
+24	LTP	904	1771	113	10	100	0	1780
+25	LVTP	905	1785	100	10	100	1	1776
+26	portal	-11	1600	16	16	16	2	2

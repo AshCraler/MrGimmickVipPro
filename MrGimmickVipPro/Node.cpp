@@ -62,9 +62,11 @@ bool Node::OverlapWithCam() {
 		id = 133;
 	bool overlap1 = (this->x > (cam->GetX() + cam->GetWidth()));
 	bool overlap2 = (this->x + this->width) < cam->GetX();
-	bool overlap3 = this->y > (cam->GetY() + cam->GetHeight());
-	bool overlap4 = (this->y + this->height) < cam->GetY();
+	bool overlap3 = this->y < (cam->GetY() - cam->GetHeight());
+	bool overlap4 = (this->y - this->height) > cam->GetY();
 	bool overlap = !(overlap1 || overlap2 || overlap3 || overlap4);
+	if (overlap == true)
+		overlap = overlap;
 	/*bool overlap =
 		(x >= cam->GetX() && x <= cam->GetX() + cam->GetWidth() && y >= cam->GetY()  && y <= cam->GetY() + cam->GetHeight()) ||
 		(x + width >= cam->GetX() && x + width <= cam->GetX() + cam->GetWidth() && y >= cam->GetY() && y <= cam->GetY() + cam->GetHeight()) ||

@@ -4,6 +4,8 @@
 
 CSprite::CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
 {
+	if (id == 400000)
+		id = id;
 	this->id = id;
 	this->left = left;
 	this->top = top;

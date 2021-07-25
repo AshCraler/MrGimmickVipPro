@@ -1,0 +1,6 @@
+#id	name	type	x	y	width	height	ani_set_id
+192
+0	Gimmick	1	16	50	0	0	1
+1	Ground	500	0	160	1000	32
+2	LTP	904	278	32	10	200	-1	288
+2	blackman	14	500	32	10	200	-1	288

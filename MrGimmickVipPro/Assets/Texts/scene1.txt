@@ -6,6 +6,7 @@
 4 	Assets\Images\hazards.jpg	204	102	185
 5 	Assets\Images\prizes.jpg	60	188	253
 6 	Assets\Images\items.png		0	0	0
+7 	Assets\Images\stage1.png	0	0	0
 
 # id	left	top	right	bottom	texture_id
 [SPRITES]
@@ -140,6 +141,12 @@
 111006	364	176	372	186	1
 111008	345	177	353	187	1
 
+	#pipe
+90000	1	154	17	170	7
+90001	18	154	34	170	7
+90002	35	154	51	170	7
+90003	52	154	68	170	7
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 
@@ -177,6 +184,11 @@
 #bomb 4																						
 401	101001	100																				
 
+# pipe
+900	90000	100
+901	90001	100
+902	90002	100
+903	90003	100
 #
 # id	ani1	ani2	ani3
 #

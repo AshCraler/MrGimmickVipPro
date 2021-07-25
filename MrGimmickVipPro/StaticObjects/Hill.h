@@ -3,13 +3,15 @@
 #define SPEED_REDUCTION_FACTOR	0.5f
 class Hill:public StaticObject
 {
-	bool up;
+
+	bool leftUpToRight;
 public:
 	void Render();
-	bool GetDirection() { return up; }
+	bool isLeftUpToRight() { return leftUpToRight; }
 	float GetSpeedReductionFactor(){ return SPEED_REDUCTION_FACTOR; }
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
-	Hill(int x, int y, int w, int h, bool up=true);
+	float GetXToYRatio();
+	Hill(int x, int y, int w, int h, bool leftUpToRight=true);
 	~Hill();
 };
 

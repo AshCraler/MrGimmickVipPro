@@ -52,8 +52,8 @@ void CSceneManager::_ParseSection_SCENES(string line)
 	vector<string> tokens = split(line);
 
 	if (tokens.size() < 2) return;
-	int id = atoi(tokens[0].c_str());
-	LPCWSTR path = ToLPCWSTR(tokens[1]);
+	int id = atoi(tokens[0].c_str())*10+ atoi(tokens[1].c_str());
+	LPCWSTR path = ToLPCWSTR(tokens[2]);
 
 	//LPSCENE scene = new CPlayScene(id, path);
 	scenes[id] = this->getSceneById(id, path);
@@ -101,13 +101,15 @@ void CSceneManager::Load(LPCWSTR gameFile)
 void CSceneManager::SwitchScene(int scene_id)
 {
 	DebugOut(L"[INFO] Switching to scene %d\n", scene_id);
+	if(false) {
+		scenes[current_scene]->Unload();;
 
-	scenes[current_scene]->Unload();;
+		CTextures::GetInstance()->Clear();
+		CSprites::GetInstance()->Clear();
+		CAnimations::GetInstance()->Clear();
 
-	CTextures::GetInstance()->Clear();
-	CSprites::GetInstance()->Clear();
-	CAnimations::GetInstance()->Clear();
-
+	}
+	
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());

@@ -20,7 +20,7 @@ CTextures *CTextures::GetInstance()
 	return __instance;
 }
 
-void CTextures::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
+void CTextures::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor, int height)
 {
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filePath, &info);
@@ -56,6 +56,7 @@ void CTextures::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
 	}
 
 	textures[id] = texture;
+	heights[id] = height;
 
 	DebugOut(L"[INFO] Texture loaded Ok: id=%d, %s\n", id, filePath);
 }

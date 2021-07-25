@@ -79,10 +79,21 @@ void Render()
 
 	if (d3ddv->BeginScene())
 	{
+
 		// Clear back buffer with a color
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
-
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+
+		// SET UP THE PIPELINE
+
+		D3DXMATRIX matRotateY;    // a matrix to store the rotation information
+
+		D3DXMATRIX matScale;    // a matrix to store the scaling information
+
+		D3DXMatrixScaling(&matScale, 1.0f,-1.0f, 2.0f);
+
+		d3ddv->SetTransform(D3DTS_WORLD, &matScale);
+		
 
 		sceneManager->GetCurrentScene()->Render();
 		spriteHandler->End();

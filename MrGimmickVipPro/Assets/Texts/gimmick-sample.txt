@@ -1,6 +1,20 @@
 [SETTINGS]
-start	1
+start	11
 
 #scene list
 [SCENES]
-1	Assets\Texts\map1\scene1.txt
+1	1	Assets\Texts\map1\scene1\scene.txt
+1	2	Assets\Texts\map1\scene2\scene.txt
+1	3	Assets\Texts\map1\scene3\scene.txt
+1	4	Assets\Texts\map1\scene4\scene.txt
+1	5	Assets\Texts\map1\scene5\scene.txt
+1	6	Assets\Texts\map1\scene6\scene.txt
+1	7	Assets\Texts\map1\scene7\scene.txt
+1	8	Assets\Texts\map1\scene8\scene.txt
+2	1	Assets\Texts\map2\scene1\scene.txt
+2	2	Assets\Texts\map2\scene2\scene.txt
+2	3	Assets\Texts\map2\scene3\scene.txt
+2	4	Assets\Texts\map2\scene4\scene.txt
+2	5	Assets\Texts\map2\scene5\scene.txt
+2	6	Assets\Texts\map2\scene6\scene.txt
+3	1	Assets\Texts\map2\scene7\scene.txt

@@ -11,7 +11,7 @@
 
 class CPlayScene: public CScene
 {
-protected: 
+public: 
 	CGimmick *player;					// A play scene has to have player, right? 
 
 	vector<LPGAMEOBJECT> objects;

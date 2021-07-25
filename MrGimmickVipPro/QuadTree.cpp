@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "Gimmick.h"
 #include <algorithm>
+#include "Enemies/SmallBlackBugWithAntena.h"
 
 using namespace std;
 QuadTree* QuadTree::instance = NULL;
@@ -45,10 +46,15 @@ void QuadTree::_Load_OBJECTS(string filePath) {
 	string line;
 	vector<string> tokens;
 
+	getline(pFile, line);
+	getline(pFile, line);
+	tokens = split(line, "\t");
+	int height = atoi(tokens[0].c_str());
+
 	CGameObject* o;
 	while (pFile.good()) {
 		getline(pFile, line);
-		if (line[0] == '#' || line == "" || line[0] == '\t') continue;
+
 		tokens = split(line, "\t");
 		int i;
 		switch (atoi(tokens[2].c_str())) {
@@ -56,52 +62,274 @@ void QuadTree::_Load_OBJECTS(string filePath) {
 			CGimmick::GetInstance()->SetPosition(atoi(tokens[3].c_str()), atoi(tokens[4].c_str()));
 			listObject.push_back(CGimmick::GetInstance());
 			break;
-		case 51:
-		case 52:
+		case SMALL_BLACK_BUG:
+			o = new SmallBlackBug(
+				atoi(tokens[2].c_str()),
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[7].c_str()) == 1,
+				atoi(tokens[8].c_str())!=-1?dynamic_cast<Jar*>(listObject[atoi(tokens[8].c_str())]):NULL);
+			listObject.push_back(o);
+			break;
+		case JUMPING_COMMAND_BOX:
+			o = new JumpingCommandBox(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str())==1);
+			listObject.push_back(o);
+			break;
+		case 901:
+			o = new ReturningCommandBox(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str()) == 1);
+			listObject.push_back(o);
+			break;
+		case 902:
+			o = new ReturnOrNotCommandbBox(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str()) == 1,
+				atoi(tokens[8].c_str()) == 1);
+			listObject.push_back(o);
+			break;
+		case 903:
+			o = new SelectiveJumpingCommandBox(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str()) == 1,
+				atoi(tokens[8].c_str()));
+			listObject.push_back(o);
+			break;
+		case 904:
+			o = new LockingViewPoint(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str()) == 1,
+				atoi(tokens[8].c_str()));
+			listObject.push_back(o);
+			break;
+		case 905:
+			o = new LockingViewToPoint(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str()) == 1,
+				atoi(tokens[8].c_str()));
+			listObject.push_back(o);
+			break;
+		case PIPE:
+			o = new Pipe(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str()));
+			listObject.push_back(o);
+			break;
+		case PIPE_CAN_WALK:
+			o = new Pipe(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str()),
+				true);
+			listObject.push_back(o);
+			break;
+		case PORTAL:
+			o = new Portal(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str()),
+				atoi(tokens[8].c_str()));
+			listObject.push_back(o);
+			break;
+		case HANGING_MACHINE:
+			o = new HangingMachine(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()));
+			listObject.push_back(o);
+			break;
+		case GUN_MACHINE:
+			o = new GunMachine(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()));
+			listObject.push_back(o);
+			break;
+		case HANGING_ELEVATOR:
+			o = new HangingElevator(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()));
+			listObject.push_back(o);
+			break;
+		case 501:
+		case 502:
 			o = new BigPrize(
 				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[2].c_str()) - 501);
+			listObject.push_back(o);
+			break;
+		case BBA:
+			o = new SmallBlackBugWithAntena(
+				atoi(tokens[3].c_str()),
+				atoi(tokens[4].c_str()));
+			listObject.push_back(o);
+			break;
+		case WINDOW:
+			o = new Window(
+				atoi(tokens[3].c_str()),
 				atoi(tokens[4].c_str()),
-				atoi(tokens[2].c_str()) - 51);
+				dynamic_cast<SmallBlackBugWithAntena*>(listObject[atoi(tokens[7].c_str())]));
+			listObject.push_back(o);
+			break;
+		case GBB:
+			o = new GiantBlackBug(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[7].c_str()),
+				atoi(tokens[8].c_str()));
+			listObject.push_back(o);
+			break;
+		case TURTLE:
+			o = new Turtle(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()));
+			listObject.push_back(o);
+			break;
+		case BOAT:
+			o = new Boat(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()));
+			listObject.push_back(o);
+			break;
+		case WTS:
+			o = new WindowThrowingShell(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()));
+			listObject.push_back(o);
+			break;
+		case LNB:
+			o = new LongNeckedBird(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str())==1
+				);
+			listObject.push_back(o);
+			break;
+		case WGM:
+			o = new WheelGunMachine(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()));
+			listObject.push_back(o);
+			break;
+		case SSB:
+			o = new StandingStillBug(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()));
+			listObject.push_back(o);
+			break;
+		case BCB:
+			o = new BombCaryingBug(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str())!=0?dynamic_cast<Jar*>(listObject[atoi(tokens[7].c_str())]):NULL);
+			listObject.push_back(o);
+			break;
+		case OBHS:
+			o = new OnBugHeadShell(
+				dynamic_cast<BombCaryingBug*>(listObject.at(atoi(tokens[3].c_str()))));
+			listObject.push_back(o);
+			break;
+		case GFS:
+			o = new GreenFatStuff(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()));
+			listObject.push_back(o);
+			break;
+		case BS:
+			o = new BrownStuff(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()));
+			listObject.push_back(o);
+			break;
+		case BM:
+			o = new BlackMan(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()));
 			listObject.push_back(o);
 			break;
 		case 60:
 		case 61:
+		case 62:
+		case 63:
 			o = new Jar(
 				atoi(tokens[3].c_str()),
-				atoi(tokens[4].c_str()),
-				atoi(tokens[2].c_str()) - 60);
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[2].c_str()) - 60,
+				atoi(tokens[5].c_str()) == 1);
 			listObject.push_back(o);
 			break;
 		case 510:
 			o = new Hill(
 				atoi(tokens[3].c_str()),
-				atoi(tokens[4].c_str()),
+				height - atoi(tokens[4].c_str()),
 				atoi(tokens[5].c_str()),
 				atoi(tokens[6].c_str()),
-				atoi(tokens[7].c_str()) != 1);
+				atoi(tokens[7].c_str()) == 1);
 			listObject.push_back(o);
 			break;
 		case 520:
 			o = new Elevator(
 				atoi(tokens[3].c_str()),
-				atoi(tokens[4].c_str()),
+				height - atoi(tokens[4].c_str())  -13,
 				atoi(tokens[5].c_str()),
 				atoi(tokens[6].c_str()),
 				atoi(tokens[7].c_str()) != 2);
 			listObject.push_back(o);
 			break;
-		case 530:
-			o = new MStair(
+		case PINKWORM:
+			o = new PinkWorm(
 				atoi(tokens[3].c_str()),
-				atoi(tokens[4].c_str()),
+				height - atoi(tokens[4].c_str()),
 				atoi(tokens[5].c_str()),
 				atoi(tokens[6].c_str()));
 			listObject.push_back(o);
 			break;
+		case 530:
+			o = new MStair(
+				atoi(tokens[3].c_str()),
+				height - atoi(tokens[4].c_str()),
+				atoi(tokens[5].c_str()),
+				atoi(tokens[6].c_str()),
+				atoi(tokens[7].c_str())==1,
+				atoi(tokens[8].c_str())==1);
+			listObject.push_back(o);
+			break;
 		case 500:
+
 		default:
 			o = new Ground(atoi(tokens[3].c_str()),
-				atoi(tokens[4].c_str()),
+				height - atoi(tokens[4].c_str()),
 				atoi(tokens[5].c_str()),
 				atoi(tokens[6].c_str()));
 			
@@ -121,12 +349,24 @@ void QuadTree::_Load_NODES(string filePath) {
 		if (line[0] == '#') continue;
 		tokens = split(line, "\t");
 
-		Node* node = new Node(atoi(tokens[0].c_str()), 
-			atoi(tokens[3].c_str()),
-			atoi(tokens[4].c_str()),
-			atoi(tokens[1].c_str()),
-			atoi(tokens[2].c_str()));
+		Node* node;
+		if (listNode.size() != 0 && listNode[1] != NULL) {
+			int height = listNode[1]->GetHeight();
+			node = new Node(atoi(tokens[0].c_str()),
+				atoi(tokens[3].c_str()),
+				atoi(tokens[4].c_str()),
+				atoi(tokens[1].c_str()),
+				height-atoi(tokens[2].c_str()));
 
+		}
+		else {
+			node = new Node(atoi(tokens[0].c_str()),
+				atoi(tokens[3].c_str()),
+				atoi(tokens[4].c_str()),
+				atoi(tokens[1].c_str()),
+				atoi(tokens[2].c_str()));
+		}
+		
 		nObject = tokens.size() - 5;
 		for (int i = 0; i < nObject; i++)
 		{

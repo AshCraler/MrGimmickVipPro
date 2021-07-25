@@ -1,0 +1,12 @@
+#id	name	type	x	y	width	height	ani_set_id
+192
+0	Gimmick	1	0	100	0	0	1
+1	pipe	-9	0	96	32	80	26
+2	pipe	-9	80	96	32	80	26
+3	pipe	-9	160	96	32	80	26
+4	pipe	-9	240	96	32	80	26
+5	pipe	-9	320	96	32	80	26
+6	pipe	-9	400	96	32	80	26
+7	Ground	500	0	64	480	32	
+8	Ground	500	0	128	480	32	
+9	portal	-11	466	97	16	32	1	5

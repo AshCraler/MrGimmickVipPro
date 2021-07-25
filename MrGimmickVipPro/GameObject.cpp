@@ -7,6 +7,9 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Sprites.h"
+#include "Enemies/SmallBlackBugWithAntena.h"
+#include "Gimmick.h"
+//#include "./StaticObjects/Ground.h"
 
 CGameObject::CGameObject()
 {
@@ -70,7 +73,9 @@ void CGameObject::CalcPotentialCollisions(
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
-
+		if(dynamic_cast<SmallBlackBugWithAntena*>(coObjects->at(i)) &&
+			dynamic_cast<CGimmick*>(this) && e->t > 0 && e->t <= 1.0f)
+			e = e;
 		if (e->t > 0 && e->t <= 1.0f)
 			coEvents.push_back(e);
 		else
@@ -78,6 +83,11 @@ void CGameObject::CalcPotentialCollisions(
 	}
 
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
+}
+void CGameObject::SetState(int state) {
+	if (dynamic_cast<CGimmick*>(this) && this->state==11)
+         state = state;
+	this->state = state; 
 }
 
 void CGameObject::FilterCollision(
@@ -101,11 +111,16 @@ void CGameObject::FilterCollision(
 		LPCOLLISIONEVENT c = coEvents[i];
 
 		if (c->t < min_tx && c->nx != 0) {
-			min_tx = c->t; nx = c->nx; min_ix = i; rdx = c->dx;
+			//if (min_ix > -1 && coEvents[min_ix]->obj->className != "Ground") {
+				min_tx = c->t; nx = c->nx; min_ix = i; rdx = c->dx;
+			//}
 		}
 
 		if (c->t < min_ty  && c->ny != 0) {
-			min_ty = c->t; ny = c->ny; min_iy = i; rdy = c->dy;
+			//if (min_iy > -1 && coEvents[min_iy]->obj->className != "Ground") {
+				min_ty = c->t; ny = c->ny; min_iy = i; rdy = c->dy;
+
+			//}
 		}
 	}
 
