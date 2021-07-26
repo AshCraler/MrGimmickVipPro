@@ -190,6 +190,10 @@ void QuadTree::_Load_OBJECTS(string filePath) {
 				atoi(tokens[4].c_str()));
 			listObject.push_back(o);
 			break;
+		case -200:
+			o = new Fish();
+			listObject.push_back(o);
+			break;
 		case WINDOW:
 			o = new Window(
 				atoi(tokens[3].c_str()),

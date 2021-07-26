@@ -21,9 +21,9 @@ void SmallBlackBugWithAntena::Render() {
 		int aniFrom =direction? 0 : animation_set->size() / 2;
 	
 		if(state!=STOOD_ON_STATE && state!=BBA_STATE_In_PIPE)
-			animation_set->at(aniFrom + state)->Render(x, y+4);
+			animation_set->at(aniFrom + state)->Render(x, y+6);
 		else 
-			animation_set->at(aniFrom + 0)->Render(x, y + 4);
+			animation_set->at(aniFrom + 0)->Render(x, y+6);
 
 		if (state == DEFENDING_STATE) {
 			animation_set->at(aniFrom + 5)->Render(x-8, y+13);
@@ -43,7 +43,13 @@ void SmallBlackBugWithAntena::Render() {
 }
 
 void SmallBlackBugWithAntena::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) {
-	if (state != INACTIVE_STATE) {
+	if (state == DEATH_STATE) {
+		CGameObject::Update(dt);
+		vy -= GIMMICK_GRAVITY * dt;
+		x += dx;
+		y += dy;
+	}
+	else if (state != INACTIVE_STATE && state!=DEATH_STATE) {
 		CGameObject::Update(dt);
 		if(state!=STOOD_ON_STATE)
 			vy -= GIMMICK_GRAVITY * dt;
@@ -261,8 +267,8 @@ void SmallBlackBugWithAntena::SetDefending() {
 }
 void SmallBlackBugWithAntena::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	if (state == DEATH_STATE) {
-		left = right = x;
-		top = bottom = y;
+		left = right = 0;
+		top = bottom = 0;
 	}
 	else {
 		left = x;
@@ -283,4 +289,11 @@ void SmallBlackBugWithAntena::GetReleased() {
 	charging=false;
 	direction = vx > 0;
 	charging_timer = GetTickCount();
+}
+void SmallBlackBugWithAntena::GetHit(bool dir) {
+	state = DEATH_STATE;
+	this->direction = true;
+	vx = dir ? SBB_VX_WHEN_HIT : -SBB_VX_WHEN_HIT;
+	vy = SBB_Y_SPEED;
+
 }

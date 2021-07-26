@@ -122,7 +122,6 @@ void CCamera::HandleUpdateFollowPlayer(int mapWidth, int mapHeight)
 			//return;
 		}
 		else if (cx +width> xF) {
-			
 			cx = xF - width;
 			if (xC < cx) {
 				cx = xC + 2;
@@ -132,8 +131,9 @@ void CCamera::HandleUpdateFollowPlayer(int mapWidth, int mapHeight)
 
 			}
 			else {
-				cx = xF;
+				cx = xF-width;
 			}
+			
 		}
 		else {
 			//cx = xC - width;
@@ -180,12 +180,13 @@ void CCamera::HandleUpdateFollowPlayer(int mapWidth, int mapHeight)
 		this->SetCameraPosition((int)cx, (int)cy);
 	}
 	else {
-		if (player->x <= this->GetX()) {
+		/*if (player->x <= this->GetX()) {
 			player->x = this->GetX();
 		}
 		if (player->x >= this->GetX() + width - player->GetWidth() - 1) {
 			player->x = this->GetX() + width - player->GetWidth() - 1;
-		}
+		}*/
+		this->SetCameraPosition(0, 150);
 	}
 }
 

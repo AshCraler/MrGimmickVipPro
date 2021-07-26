@@ -27,6 +27,7 @@ class SmallBlackBugWithAntena :public Enemy
 public:
 	SmallBlackBugWithAntena(int x, int Y);
 	~SmallBlackBugWithAntena();
+	void GetHit(bool dir);
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects);
 	void SetActive() { state = JUMPING_STATE; }

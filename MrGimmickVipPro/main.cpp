@@ -230,7 +230,18 @@ LPSCENE getSceneById(int id, LPCWSTR path)
 	else {
 		scene = new CPlayScene(id, path);
 	}*/
-	scene = new CPlayScene(id, path);
+	if (id > 40) {
+		scene = new MenuScene(id, path);
+
+	}
+	else if (id < 10) {
+		scene = new IntroScene(id, path);
+
+	}
+	else {
+		scene = new CPlayScene(id, path);
+
+	}
 	return scene;
 }
 

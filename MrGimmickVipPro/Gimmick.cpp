@@ -477,6 +477,10 @@ void Star::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects, bool update
 						dynamic_cast<SmallBlackBug*>(e->obj)->GetHit(e->nx > 0);
 						CGimmick::GetInstance()->IncreaseScore(KILL_ENEMY);
 					}
+					if (dynamic_cast<SmallBlackBugWithAntena*>(e->obj)) {
+						dynamic_cast<SmallBlackBugWithAntena*>(e->obj)->GetHit(e->nx > 0);
+						CGimmick::GetInstance()->IncreaseScore(KILL_ENEMY);
+					}
 					else if (dynamic_cast<PinkWorm*>(e->obj)) {
 						dynamic_cast<PinkWorm*>(e->obj)->GetHit(e->nx > 0);
 						CGimmick::GetInstance()->IncreaseScore(KILL_ENEMY);
@@ -2312,19 +2316,26 @@ void CGimmick::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects)
 		else
 			bomb_phase = SpreadingStars;*/
 	}
-	if (x < 0) {
-		x = 0;
+	if (CSceneManager::GetInstance()->GetCurrentSceneId() != 41) {
+		if (x < 0) {
+			x = 0;
+		}
+		else if (x > dynamic_cast<CPlayScene*>(CSceneManager::GetInstance()->GetCurrentScene())->mapWidth) {
+			x = dynamic_cast<CPlayScene*>(CSceneManager::GetInstance()->GetCurrentScene())->mapWidth;
+		}
+		if (y > dynamic_cast<CPlayScene*>(CSceneManager::GetInstance()->GetCurrentScene())->mapHeight) {
+			y = dynamic_cast<CPlayScene*>(CSceneManager::GetInstance()->GetCurrentScene())->mapHeight;
+		}
+		else if (y < 0 && state != GIMMICK_STATE_JUMP) {
+			y = 1;
+		}
+		if (y < 0 && state == GIMMICK_STATE_JUMP) {
+			CMenu::GetInstance()->win = -1;
+			CSceneManager::GetInstance()->SwitchScene(41);
+		}
+		instance = this;
 	}
-	else if (x > dynamic_cast<CPlayScene*>(CSceneManager::GetInstance()->GetCurrentScene())->mapWidth) {
-		x = dynamic_cast<CPlayScene*>(CSceneManager::GetInstance()->GetCurrentScene())->mapWidth;
-	}
-	if (y > dynamic_cast<CPlayScene*>(CSceneManager::GetInstance()->GetCurrentScene())->mapHeight) {
-		y = dynamic_cast<CPlayScene*>(CSceneManager::GetInstance()->GetCurrentScene())->mapHeight;
-	}
-	else if (y < 0 && state!=GIMMICK_STATE_JUMP) {
-		y = 1;
-	}
-	instance = this;
+	
 	// DebugOut(L"VX, dx in Gimmick: %f, %f\n", vx,dx);
 
 }
@@ -2871,7 +2882,6 @@ void CGimmick::SetStandingOnSBB(bool s, SmallBlackBug* b) {
 }
 void CGimmick::SetStandingOnSB(bool s, SmallBug* b) {
 	standingOnSB = s;
-	SetVX(0);
 	if (state != GIMMICK_STATE_WALKING_RIGHT && state != GIMMICK_STATE_WALKING_LEFT && state != GIMMICK_STATE_INJURED && state != GIMMICK_STATE_IN_PIPE) {
 		landedWhen = GetTickCount();
 		CGameObject::SetState(GIMMICK_STATE_IDLE);
@@ -2884,6 +2894,7 @@ void CGimmick::SetStandingOnSB(bool s, SmallBug* b) {
 		sb = b;
 		deltaSB_x = b->x - x;
 		deltaSB_y = b->y - y;
+		SetVX(0);
 
 		SetStandingMovingStair(false);
 		SetStangdingOnHill(false);
@@ -3447,6 +3458,10 @@ void CGimmick::IncreaseLife(float l) {
 	if (lives < 4) {
 		lives=ceil(lives+l);
 		if (lives> 4)lives = 4;
+		if (lives <= 0) {
+			CMenu::GetInstance()->win = -1;
+			CSceneManager::GetInstance()->SwitchScene(41);
+		}
 	}
 }
 bool CGimmick::AddItem(int i) {

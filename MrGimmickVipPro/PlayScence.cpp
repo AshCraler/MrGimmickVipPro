@@ -5,8 +5,478 @@
 #include "Utils.h"
 #include "Textures.h"
 #include "Sprites.h"
+#define SCENE_SECTION_UNKNOWN -1
+#define SCENE_SECTION_TEXTURES 2
+#define SCENE_SECTION_SPRITES 3
+#define SCENE_SECTION_ANIMATIONS 4
+#define SCENE_SECTION_ANIMATION_SETS	5
+#define SCENE_SECTION_OBJECTS	6
+#define SCENE_SECTION_SETTINGS	7
+
+#define OBJECT_TYPE_MARIO	1
+#define OBJECT_TYPE_BRICK	1
+#define OBJECT_TYPE_GOOMBA	2
+#define OBJECT_TYPE_KOOPAS	3
+
+#define OBJECT_TYPE_PORTAL	50
+
+#define MAX_SCENE_LINE 1024
 
 using namespace std;
+void CIntroScenceKeyHandler::OnKeyDown(int KeyCode)
+{
+	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+
+	CGimmick* mario = CGimmick::GetInstance();
+	switch (KeyCode)
+	{
+	case DIK_SPACE:
+		mario->SetState(GIMMICK_STATE_JUMP);
+		break;
+	case DIK_A:
+		mario->Reset();
+		break;
+	}
+}
+
+void CIntroScenceKeyHandler::KeyState(BYTE* states)
+{
+	CGame* game = CGame::GetInstance();
+	Intro* intro = Intro::GetInstance();
+	if (intro == NULL)return;
+	// disable control key when Mario die 
+	if (game->IsKeyDown(DIK_SPACE))
+		intro->Control(1);
+	else if (game->IsKeyDown(DIK_LEFT))
+		intro->Control(3);
+	else if (game->IsKeyDown(DIK_UP))
+		intro->Control(0);
+	else if (game->IsKeyDown(DIK_DOWN))
+		intro->Control(10);
+
+}
+void IntroScene::Render()
+{
+	intro->Render();
+	float x, y;
+
+}
+void IntroScene::Update(DWORD dt)
+{
+	intro->Update(dt);
+	if (intro == NULL) return;
+	camera->SetFollowPlayer(false);
+	camera->HandleUpdateFollowPlayer(256, 150);
+
+}
+IntroScene::IntroScene(int id, LPCWSTR filePath) :
+	CScene(id, filePath)
+{
+	key_handler = new CIntroScenceKeyHandler(this);
+	camera = CCamera::GetInstance();
+
+}
+void IntroScene::Unload()
+{
+	intro = nullptr;
+
+	CScene::Unload();
+
+	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
+}
+void IntroScene::_ParseSection_TEXTURES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 5) return; // skip invalid lines
+
+	int texID = atoi(tokens[0].c_str());
+	wstring path = ToWSTR(tokens[1]);
+	int R = atoi(tokens[2].c_str());
+	int G = atoi(tokens[3].c_str());
+	int B = atoi(tokens[4].c_str());
+	if (texID == 6)
+		texID = texID;
+	CTextures::GetInstance()->Add(texID, path.c_str(), D3DCOLOR_XRGB(R, G, B), atoi(tokens[5].c_str()));
+}
+
+void IntroScene::_ParseSection_SPRITES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 6) return; // skip invalid lines
+
+	int ID = atoi(tokens[0].c_str());
+	int l = atoi(tokens[1].c_str());
+	int t = atoi(tokens[2].c_str());
+	int r = atoi(tokens[3].c_str());
+	int b = atoi(tokens[4].c_str());
+	int texID = atoi(tokens[5].c_str());
+
+	LPDIRECT3DTEXTURE9 tex = CTextures::GetInstance()->Get(texID);
+	int height = CTextures::GetInstance()->GetHeight(texID);
+	if (tex == NULL)
+	{
+		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+		return;
+	}
+	if (ID == 100000) {
+		ID = ID;
+	}
+	if (ID != 200000 && ID != 300000 && ID != 400000) {
+		CSprites::GetInstance()->Add(ID, l, height - t, r, height - b, tex);
+
+	}
+	else {
+		CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+
+	}
+}
+
+void IntroScene::_ParseSection_ANIMATIONS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 3) return; // skip invalid lines - an animation must at least has 1 frame and 1 frame time
+
+	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
+
+	LPANIMATION ani = new CAnimation();
+
+	int ani_id = atoi(tokens[0].c_str());
+	for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+	{
+		int sprite_id = atoi(tokens[i].c_str());
+		int frame_time = atoi(tokens[i + 1].c_str());
+		if (sprite_id != 0) ani->Add(sprite_id, frame_time);
+	}
+	CAnimations::GetInstance()->Add(ani_id, ani);
+
+	if (atoi(tokens[0].c_str()) < 3000) {
+		ani = new CAnimation();
+		for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+		{
+			int sprite_id = atoi(tokens[i].c_str());
+			int frame_time = atoi(tokens[i + 1].c_str());
+			if (sprite_id != 0) ani->Add(sprite_id + 10000, frame_time);
+		}
+		CAnimations::GetInstance()->Add(ani_id + 10000, ani);
+	}
+
+}
+
+void IntroScene::_ParseSection_ANIMATION_SETS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return; // skip invalid lines - an animation set must at least id and one animation id
+
+	int ani_set_id = atoi(tokens[0].c_str());
+
+	LPANIMATION_SET s = new CAnimationSet();
+
+	CAnimations* animations = CAnimations::GetInstance();
+
+	for (int i = 1; i < tokens.size(); i++)
+	{
+		int ani_id = atoi(tokens[i].c_str());
+
+		LPANIMATION ani = animations->Get(ani_id);
+		s->push_back(ani);
+	}
+
+	if (atoi(tokens[0].c_str()) < 30) {
+		for (int i = 1; i < tokens.size(); i++)
+		{
+			int ani_id = atoi(tokens[i].c_str());
+
+			LPANIMATION ani = animations->Get(ani_id + 10000);
+			s->push_back(ani);
+		}
+	}
+
+	CAnimationSets::GetInstance()->Add(ani_set_id, s);
+}
+
+void IntroScene::Load()
+{
+	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
+
+	ifstream f;
+	f.open(sceneFilePath);
+
+	// current resource section flag
+	int section = SCENE_SECTION_UNKNOWN;
+
+	char str[MAX_SCENE_LINE];
+	while (f.getline(str, MAX_SCENE_LINE))
+	{
+		string line(str);
+
+		if (line[0] == '#' || line == "" || line[0] == '\t') continue;	// skip comment lines	
+
+		if (line == "[TEXTURES]") { section = SCENE_SECTION_TEXTURES; continue; }
+		if (line == "[SPRITES]") {
+			section = SCENE_SECTION_SPRITES; continue;
+		}
+		if (line == "[ANIMATIONS]") {
+			section = SCENE_SECTION_ANIMATIONS; continue;
+		}
+		if (line == "[ANIMATION_SETS]") {
+			section = SCENE_SECTION_ANIMATION_SETS; continue;
+		}
+		if (line == "[SETTINGS]") {
+			section = SCENE_SECTION_SETTINGS; continue;
+		}
+		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
+
+		//
+		// data section
+		//
+		switch (section)
+		{
+		case SCENE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
+		case SCENE_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
+		case SCENE_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
+		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
+
+		}
+	}
+
+	f.close();
+	intro = Intro::GetInstance();
+	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Assets\\Images\\bbox.png", D3DCOLOR_XRGB(255, 255, 255), 0);
+
+}
+
+
+void CMenuScenceKeyHandler::OnKeyDown(int KeyCode)
+{
+	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+
+	CGimmick* mario = CGimmick::GetInstance();
+	switch (KeyCode)
+	{
+	case DIK_SPACE:
+		mario->SetState(GIMMICK_STATE_JUMP);
+		break;
+	case DIK_A:
+		mario->Reset();
+		break;
+	}
+}
+
+void CMenuScenceKeyHandler::KeyState(BYTE* states)
+{
+	CGame* game = CGame::GetInstance();
+	CMenu* menu = CMenu::GetInstance();
+	if (menu == NULL)return;
+	// disable control key when Mario die 
+	if (game->IsKeyDown(DIK_RIGHT))
+		menu->Control(1);
+	else if (game->IsKeyDown(DIK_LEFT))
+		menu->Control(3);
+	else if (game->IsKeyDown(DIK_UP))
+		menu->Control(0);
+	else if (game->IsKeyDown(DIK_DOWN))
+		menu->Control(10);
+
+}
+void MenuScene::Render()
+{
+	menu->Render();
+	float x, y;
+
+}
+void MenuScene::Update(DWORD dt)
+{
+	menu->Update(dt);
+	if (menu == NULL) return;
+	camera->SetFollowPlayer(false);
+	camera->HandleUpdateFollowPlayer(256, 150);
+
+}
+MenuScene::MenuScene(int id, LPCWSTR filePath) :
+	CScene(id, filePath)
+{
+	key_handler = new CMenuScenceKeyHandler(this);
+	camera = CCamera::GetInstance();
+
+}
+void MenuScene::Unload()
+{
+	menu = nullptr;
+
+	CScene::Unload();
+
+	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
+}
+void MenuScene::_ParseSection_TEXTURES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 5) return; // skip invalid lines
+
+	int texID = atoi(tokens[0].c_str());
+	wstring path = ToWSTR(tokens[1]);
+	int R = atoi(tokens[2].c_str());
+	int G = atoi(tokens[3].c_str());
+	int B = atoi(tokens[4].c_str());
+	if (texID == 6)
+		texID = texID;
+	CTextures::GetInstance()->Add(texID, path.c_str(), D3DCOLOR_XRGB(R, G, B), atoi(tokens[5].c_str()));
+}
+
+void MenuScene::_ParseSection_SPRITES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 6) return; // skip invalid lines
+
+	int ID = atoi(tokens[0].c_str());
+	int l = atoi(tokens[1].c_str());
+	int t = atoi(tokens[2].c_str());
+	int r = atoi(tokens[3].c_str());
+	int b = atoi(tokens[4].c_str());
+	int texID = atoi(tokens[5].c_str());
+
+	LPDIRECT3DTEXTURE9 tex = CTextures::GetInstance()->Get(texID);
+	int height = CTextures::GetInstance()->GetHeight(texID);
+	if (tex == NULL)
+	{
+		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+		return;
+	}
+	if (ID == 100000) {
+		ID = ID;
+	}
+	if (ID != 200000 && ID != 300000 && ID != 400000) {
+		CSprites::GetInstance()->Add(ID, l, height - t, r, height - b, tex);
+
+	}
+	else {
+		CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+
+	}
+}
+
+void MenuScene::_ParseSection_ANIMATIONS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 3) return; // skip invalid lines - an animation must at least has 1 frame and 1 frame time
+
+	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
+
+	LPANIMATION ani = new CAnimation();
+
+	int ani_id = atoi(tokens[0].c_str());
+	for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+	{
+		int sprite_id = atoi(tokens[i].c_str());
+		int frame_time = atoi(tokens[i + 1].c_str());
+		if (sprite_id != 0) ani->Add(sprite_id, frame_time);
+	}
+	CAnimations::GetInstance()->Add(ani_id, ani);
+
+	if (atoi(tokens[0].c_str()) < 3000) {
+		ani = new CAnimation();
+		for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+		{
+			int sprite_id = atoi(tokens[i].c_str());
+			int frame_time = atoi(tokens[i + 1].c_str());
+			if (sprite_id != 0) ani->Add(sprite_id + 10000, frame_time);
+		}
+		CAnimations::GetInstance()->Add(ani_id + 10000, ani);
+	}
+
+}
+
+void MenuScene::_ParseSection_ANIMATION_SETS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return; // skip invalid lines - an animation set must at least id and one animation id
+
+	int ani_set_id = atoi(tokens[0].c_str());
+
+	LPANIMATION_SET s = new CAnimationSet();
+
+	CAnimations* animations = CAnimations::GetInstance();
+
+	for (int i = 1; i < tokens.size(); i++)
+	{
+		int ani_id = atoi(tokens[i].c_str());
+
+		LPANIMATION ani = animations->Get(ani_id);
+		s->push_back(ani);
+	}
+
+	if (atoi(tokens[0].c_str()) < 30) {
+		for (int i = 1; i < tokens.size(); i++)
+		{
+			int ani_id = atoi(tokens[i].c_str());
+
+			LPANIMATION ani = animations->Get(ani_id + 10000);
+			s->push_back(ani);
+		}
+	}
+
+	CAnimationSets::GetInstance()->Add(ani_set_id, s);
+}
+
+void MenuScene::Load()
+{
+	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
+
+	ifstream f;
+	f.open(sceneFilePath);
+
+	// current resource section flag
+	int section = SCENE_SECTION_UNKNOWN;
+
+	char str[MAX_SCENE_LINE];
+	while (f.getline(str, MAX_SCENE_LINE))
+	{
+		string line(str);
+
+		if (line[0] == '#' || line == "" || line[0] == '\t') continue;	// skip comment lines	
+
+		if (line == "[TEXTURES]") { section = SCENE_SECTION_TEXTURES; continue; }
+		if (line == "[SPRITES]") {
+			section = SCENE_SECTION_SPRITES; continue;
+		}
+		if (line == "[ANIMATIONS]") {
+			section = SCENE_SECTION_ANIMATIONS; continue;
+		}
+		if (line == "[ANIMATION_SETS]") {
+			section = SCENE_SECTION_ANIMATION_SETS; continue;
+		}
+		if (line == "[SETTINGS]") {
+			section = SCENE_SECTION_SETTINGS; continue;
+		}
+		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
+
+		//
+		// data section
+		//
+		switch (section)
+		{
+		case SCENE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
+		case SCENE_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
+		case SCENE_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
+		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
+
+		}
+	}
+
+	f.close();
+	menu = CMenu::GetInstance();
+	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"Assets\\Images\\bbox.png", D3DCOLOR_XRGB(255, 255, 255), 0);
+
+}
+
+
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
@@ -25,22 +495,6 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	See scene1.txt, scene2.txt for detail format specification
 */
 
-#define SCENE_SECTION_UNKNOWN -1
-#define SCENE_SECTION_TEXTURES 2
-#define SCENE_SECTION_SPRITES 3
-#define SCENE_SECTION_ANIMATIONS 4
-#define SCENE_SECTION_ANIMATION_SETS	5
-#define SCENE_SECTION_OBJECTS	6
-#define SCENE_SECTION_SETTINGS	7
-
-#define OBJECT_TYPE_MARIO	1
-#define OBJECT_TYPE_BRICK	1
-#define OBJECT_TYPE_GOOMBA	2
-#define OBJECT_TYPE_KOOPAS	3
-
-#define OBJECT_TYPE_PORTAL	50
-
-#define MAX_SCENE_LINE 1024
 
 
 void CPlayScene::_ParseSection_TEXTURES(string line)
@@ -79,7 +533,7 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
 		return; 
 	}
-	if (ID == 600201) {
+	if (ID == 100000) {
 		ID = ID;
 	}
 	if (ID != 200000 && ID != 300000 && ID!= 400000) {
@@ -351,6 +805,9 @@ void CPlayScene::Update(DWORD dt)
 		else if (dynamic_cast<Boat*>(o)) {
 			dynamic_cast<Boat*>(o)->Update(dt);
 		}
+		else if (dynamic_cast<Fish*>(o)) {
+			dynamic_cast<Fish*>(o)->Update(dt);
+		}
 		else o->Update(dt, &coObjects);
 	}
 	player->Update(dt, &coObjects);
@@ -366,6 +823,8 @@ void CPlayScene::Update(DWORD dt)
 	//cy -= game->GetScreenHeight();
 
 	//CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	camera->SetFollowPlayer(true);
+
 	camera->HandleUpdateFollowPlayer(mapWidth, mapHeight);
 
 }
@@ -419,10 +878,11 @@ void CPlayScene::Render()
 	{
 		listItems.at(i)->Render();
 	}*/
-
+	Fish* f = NULL;
 	for (int i = 0; i < coObjects.size(); i++)
 	{
 		coObjects[i]->Render();
+		if (dynamic_cast<Fish*>(coObjects[i]))f = dynamic_cast<Fish*>(coObjects[i]);
 	}
 
 	//player->Render();
@@ -433,6 +893,9 @@ void CPlayScene::Render()
 	{
 		if(dynamic_cast<Pipe*>(coObjects[i]))
 			coObjects[i]->Render();
+	}
+	if (f != NULL) {
+		f->Render();
 	}
 	// DebugOut(L"location in PlayScene: %f, %f\n", x, y);
 	ScorePanel::Render();

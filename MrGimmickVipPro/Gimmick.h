@@ -61,7 +61,7 @@
 #define GIMMICK_FORMING_STAR_PHASE_2	1000
 
 #define GIMMICK_INJURED_TIME	15000
-#define GIMMICK_FAINTED_TIME	4000
+#define GIMMICK_FAINTED_TIME	3000
 #define GIMMICK_STATE_INJURED	5
 #define GIMMICK_VX_WHEN_INJURED	0.02f
 #define GIMMICK_VY_WHEN_INJURED	0.02f
@@ -404,6 +404,9 @@ public:
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom); //chua dinh nghia
 
 	static CGimmick* GetInstance();
+	static void Refresh() {
+		instance = new CGimmick(0, 0);
+	}
 	void _checkSweptAABB(vector<LPGAMEOBJECT>* co);
 	bool IsJumping() { return state == GIMMICK_STATE_JUMP; }
 	bool IsHavingStar() { return stars.size() != 0 || star_phase==3; }

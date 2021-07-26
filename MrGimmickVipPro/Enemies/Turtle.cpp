@@ -18,8 +18,16 @@ Turtle::Turtle(int x, int y, int x_from, int x_to) {
 Turtle::~Turtle() {}
 
 void Turtle::Render() {
-	int aniFrom = direction ? 0 : animation_set->size() / 2;
-	animation_set->at(aniFrom + state)->Render(x, y);
+	if (state == TURTLE_DEATH_STATE) {
+		int aniFrom = direction ? 0 : animation_set->size() / 2;
+		animation_set->at(aniFrom + state)->Render(x, y+3);
+	}
+	else {
+		int aniFrom = direction ? 0 : animation_set->size() / 2;
+		animation_set->at(aniFrom + state)->Render(x, y);
+	}
+	/*int aniFrom = direction ? 0 : animation_set->size() / 2;
+	animation_set->at(aniFrom + state)->Render(x, y);*/
 	/*switch (state) {
 	case WALKING_STATE:
 		animation_set->at(case)

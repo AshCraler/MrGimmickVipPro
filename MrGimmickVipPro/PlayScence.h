@@ -9,6 +9,64 @@
 #include "QuadTree.h"
 #include "./ScorePanel/ScorePanel.h"
 
+class IntroScene :public CScene {
+public:
+	Intro* intro;
+	CCamera* camera;
+
+	//CCamera* camera;
+	friend class CIntroScenceKeyHandler;
+
+	IntroScene(int id, LPCWSTR filePath);
+
+	virtual void Load();
+	virtual void Update(DWORD dt);
+	virtual void Render();
+	virtual void Unload();
+
+	void _ParseSection_TEXTURES(string line);
+	void _ParseSection_SPRITES(string line);
+	void _ParseSection_ANIMATIONS(string line);
+	void _ParseSection_ANIMATION_SETS(string line);
+};
+class CIntroScenceKeyHandler : public CScenceKeyHandler
+{
+public:
+	virtual void KeyState(BYTE* states);
+	virtual void OnKeyDown(int KeyCode);
+	virtual void OnKeyUp(int KeyCode) {};
+	CIntroScenceKeyHandler(CScene* s) :CScenceKeyHandler(s) {};
+};
+
+class MenuScene :public CScene {
+public: 
+	CMenu* menu;
+	CCamera* camera;
+
+	//CCamera* camera;
+	friend class CMenuScenceKeyHandler;
+
+	MenuScene(int id, LPCWSTR filePath);
+
+	virtual void Load();
+	virtual void Update(DWORD dt);
+	virtual void Render();
+	virtual void Unload();
+
+	void _ParseSection_TEXTURES(string line);
+	void _ParseSection_SPRITES(string line);
+	void _ParseSection_ANIMATIONS(string line);
+	void _ParseSection_ANIMATION_SETS(string line);
+};
+class CMenuScenceKeyHandler : public CScenceKeyHandler
+{
+public:
+	virtual void KeyState(BYTE* states);
+	virtual void OnKeyDown(int KeyCode);
+	virtual void OnKeyUp(int KeyCode) {};
+	CMenuScenceKeyHandler(CScene* s) :CScenceKeyHandler(s) {};
+};
+
 class CPlayScene: public CScene
 {
 public: 

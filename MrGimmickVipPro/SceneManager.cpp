@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include "Game.h"
+#include "PlayScence.h"
 
 using namespace std;
 
@@ -113,7 +114,28 @@ void CSceneManager::SwitchScene(int scene_id)
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
-	s->Load();
+	if (current_scene > 40) {
+		dynamic_cast<MenuScene*>(s)->Load();
+
+	}
+	else if (current_scene < 10) {
+		dynamic_cast<IntroScene*>(s)->Load();
+
+	}
+	else {
+		if (current_scene % 10 == 1) {
+			CGimmick::Refresh();
+		}
+		s->Load();
+		if (current_scene == 18 || current_scene == 21 || current_scene == 25) {
+			CGimmick::GetInstance()->finalScene = true;
+		}
+		else {
+			CGimmick::GetInstance()->finalScene = false;
+
+		}
+
+	}
 }
 
 LPSCENE CSceneManager::GetCurrentScene()

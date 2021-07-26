@@ -11,7 +11,7 @@
 #define WTS_HEIGHT 16
 #define FALLING_RANGE	155
 #define EXPLODING_TIME	1000
-#define WATER_TIME	1000
+#define WATER_TIME	2000
 //#define SHELL_GRAVITY 0.0001f
 //#define SHELL_X_RANGE	10
 class WindowThrowingShell :public DynamicObject

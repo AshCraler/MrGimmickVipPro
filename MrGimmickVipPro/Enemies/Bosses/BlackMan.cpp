@@ -1,6 +1,7 @@
 #include "BlackMan.h"
 #include "../../StaticObjects/Ground.h"
 #include "../../Gimmick.h"
+#include "../../SceneManager.h"
 
 BFire::BFire(int x, int y, float vx, float vy) {
 	this->x = x;
@@ -668,6 +669,12 @@ void BlackMan::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) {
 							CGameObject::Update(dt);
 							y += dy;
 							x += dx;
+							if (GetTickCount()- fallingSparkTimer>5000) {
+								CMenu::GetInstance()->win = 1;
+								CMenu::GetInstance()->nextStage++;
+
+								CSceneManager::GetInstance()->SwitchScene(41);
+							}
 							if (abs(vx) > 0.01) {
 								if (vx > 0) {
 									vx -= 0.00001 * dt;

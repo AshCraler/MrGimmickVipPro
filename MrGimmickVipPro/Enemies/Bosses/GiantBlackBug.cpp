@@ -1,6 +1,7 @@
 #include "GiantBlackBug.h"
 #include "../../StaticObjects/Ground.h"
 #include "../../Gimmick.h"
+#include "../../SceneManager.h"
 
 SmallBug::SmallBug(float x, float y, float vx, float vy) {
 	this->x = x;
@@ -74,6 +75,11 @@ void SmallBug::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) {
 				if (state == SB_FALLING_STATE) {
 					state = SB_WALKING_STATE;
 					vx = SB_X_SPEED/1.5;
+				}
+			}
+			else {
+				if (e->nx != 0) {
+					x = x - min_tx * dx - nx * 0.1f + dx;
 				}
 			}
 			if (e->ny != 0)vy = 0;
@@ -193,7 +199,10 @@ void GiantBlackBug::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) {
 	if (state == GBB_DEATH_STATE) {
 		if (GetTickCount() - defeatedWhen > 5000) {
 			CGimmick::GetInstance()->GetLocked(false);
+			CMenu::GetInstance()->win = 1;
+			CMenu::GetInstance()->nextStage ++;
 
+			CSceneManager::GetInstance()->SwitchScene(41);
 		}
 	}
 	if (coEvents.size() == 0 || state == GBB_DEATH_STATE) {

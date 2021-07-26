@@ -1,6 +1,7 @@
 #include "BrownStuff.h"
 #include "../../StaticObjects/Ground.h"
 #include "../../Gimmick.h"
+#include "../../SceneManager.h"
 
 Sword::Sword(int x, int y) {
 	this->x = x;
@@ -33,6 +34,10 @@ void Sword::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects) {
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	if (collidedWithGround && GetTickCount() - timeToRelease > 5000) {
 		CGimmick::GetInstance()->GetLocked(false);
+		CMenu::GetInstance()->win = 1;
+		CMenu::GetInstance()->nextStage++;
+
+		CSceneManager::GetInstance()->SwitchScene(41);
 	}
 	coEvents.clear();
 	CalcPotentialCollisions(colliable_objects, coEvents);
